@@ -5,6 +5,7 @@
     <color name="colorAccent">#FF4081</color>
 
     <!-- 公共颜色-->
+    <color name="windowBackground">#ffffff</color>
     <color name="colorBackground">#ffffff</color>
     <color name="colorTitleBackgrounp">#56aaff</color>
     <color name="colorTitleTextColor">#ffffff</color>

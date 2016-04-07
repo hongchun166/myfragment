@@ -11,10 +11,8 @@ import android.widget.ImageView;
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.util.ImagerUtils;
 
-import org.xutils.common.util.LogUtil;
 import org.xutils.x;
 
-import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -29,7 +27,6 @@ public class ExperienceVPAdapter extends PagerAdapter {
         this.datas=datas;
         this.context=context;
         this.inflater=LayoutInflater.from(context);
-        Log.i(ExperienceVPAdapter.class.getName(),"===ExperienceVPAdapter==" + datas.size());
     }
     @Override
     public int getCount() {
@@ -48,11 +45,9 @@ public class ExperienceVPAdapter extends PagerAdapter {
 
     @Override
     public Object instantiateItem(ViewGroup container, int position) {
-        View view=inflater.inflate(R.layout.tourist_item_layout, null);
+        View view=inflater.inflate(R.layout.experience_item_layout, null);
         ImageView imageView=(ImageView)view.findViewById(R.id.imageView);
-        imageView.setImageResource(R.mipmap.ic_launcher);
-//        x.image().bind(imageView,datas.get(position), ImagerUtils.getImageOptions());
-        Log.i(ExperienceVPAdapter.class.getName(), "===instantiateItem==" + datas.size());
+        x.image().bind(imageView,datas.get(position), ImagerUtils.getImageOptions());
         container.addView(view);
         view.setId(position);
         return view;

@@ -26,7 +26,6 @@ public class StartActivity extends BaseNormActivity {
             @Override
             public void run() {
                 boolean isFirstLogin=SPutils.getInstants(StartActivity.this).getIsFirstLogin();
-                isFirstLogin=false;
                 if(isFirstLogin){
                     Intent intent=new Intent(StartActivity.this, UserExperienceActivity.class);
                     startActivity(intent);

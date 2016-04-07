@@ -44,25 +44,22 @@ public class UserExperienceActivity extends BaseNormActivity {
     List<String> datas;
     ExperienceVPAdapter mAdapter;
 
+
     @Override
-    public void onCreate(Bundle savedInstanceState, PersistableBundle persistentState) {
-        super.onCreate(savedInstanceState, persistentState);
-        Log.i(UserExperienceActivity.class.getName(),"===onCreate==");
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
         initEven();
         initView();
     }
 
     private void initView(){
         datas=new ArrayList<>();
-        datas.add("assets://experience/launch1.png");
-        datas.add("assets://experience/launch2.png");
-        datas.add("assets://experience/launch3.png");
-        datas.add("assets://experience/launch4.png");
+        datas.add("assets://experience/launch_1.png");
+        datas.add("assets://experience/launch_2.png");
+        datas.add("assets://experience/launch_3.png");
+        datas.add("assets://experience/launch_4.png");
         mAdapter=new ExperienceVPAdapter(this,datas);
         viewPager.setAdapter(mAdapter);
-
-        Log.i(UserExperienceActivity.class.getName(),"===datassize=="+datas.size());
-
 
         {
             LayoutInflater inflater=LayoutInflater.from(this);
@@ -100,7 +97,6 @@ public class UserExperienceActivity extends BaseNormActivity {
 
                 RadioButton radiobtn= ((RadioButton)radioGroup.getChildAt(position).findViewById(R.id.radioButton_point));
                 radiobtn.setChecked(true);
-
                 if(position==datas.size()-1){
                     btn_experience.setVisibility(View.VISIBLE);
                 }else {

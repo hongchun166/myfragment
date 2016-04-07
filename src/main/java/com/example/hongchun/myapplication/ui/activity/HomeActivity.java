@@ -5,6 +5,7 @@ import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v7.widget.Toolbar;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -28,6 +29,12 @@ import org.xutils.view.annotation.ViewInject;
 @ContentView(R.layout.activity_home)
 public class HomeActivity extends BaseExitActivity {
 
+    @ViewInject(R.id.toolbar)
+    private Toolbar mToolBar;
+
+    @ViewInject(R.id.textview_titlename)
+    TextView textViewTitlename;
+
     @ViewInject(R.id.radiogroup)
     RadioGroup radioGroup;
 
@@ -49,15 +56,15 @@ public class HomeActivity extends BaseExitActivity {
     @ViewInject(R.id.radiobutton_friends)
     RadioButton radioButton_friends;
 
-    @ViewInject(R.id.textview_titlename)
-    TextView textView_titleName;
 
     Fragment tempFragment;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        initToolBar(mToolBar);
         setDefaultFragment();
+
     }
 
     private void setDefaultFragment(){
@@ -67,7 +74,7 @@ public class HomeActivity extends BaseExitActivity {
         transaction.add(R.id.framelayout, fragment, "HomeFragment");
         transaction.commit();
         tempFragment=fragment;
-        setTitleName(getResources().getString(R.string.string_home_tab_home));
+        initToolBar(mToolBar,textViewTitlename,getResources().getString(R.string.string_home_tab_home));
     }
 
     @Event(value = {R.id.radiogroup},type = RadioGroup.OnCheckedChangeListener.class)
@@ -89,7 +96,7 @@ public class HomeActivity extends BaseExitActivity {
                             fragment=new FriendsFragment();
                             transaction.add(framelayoutId,fragment, "FriendsFragment");
                         }
-                        setTitleName(getResources().getString(R.string.string_home_tab_friends));
+                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_friends));
                         break;
                     case R.id.radiobutton_call:
                         fragment=fragmentManager.findFragmentByTag("CallFragment");
@@ -99,7 +106,7 @@ public class HomeActivity extends BaseExitActivity {
                             fragment=new CallFragment();
                             transaction.add(framelayoutId,fragment, "CallFragment");
                         }
-                        setTitleName(getResources().getString(R.string.string_home_tab_call));
+                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_call));
                         break;
                     case R.id.radiobutton_home:
                         fragment=fragmentManager.findFragmentByTag("HomeFragment");
@@ -109,7 +116,7 @@ public class HomeActivity extends BaseExitActivity {
                             fragment=new HomeFragment();
                             transaction.add(framelayoutId,fragment, "HomeFragment");
                         }
-                        setTitleName(getResources().getString(R.string.string_home_tab_home));
+                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_home));
                         break;
                     case R.id.radiobutton_history:
                         fragment=fragmentManager.findFragmentByTag("HistoryFragment");
@@ -119,7 +126,7 @@ public class HomeActivity extends BaseExitActivity {
                             fragment=new HistoryFragment();
                             transaction.add(framelayoutId,fragment, "HistoryFragment");
                         }
-                        setTitleName(getResources().getString(R.string.string_home_tab_history));
+                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_history));
                         break;
                     case R.id.radiobutton_message:
                         fragment=fragmentManager.findFragmentByTag("MessageFragment");
@@ -129,15 +136,11 @@ public class HomeActivity extends BaseExitActivity {
                             fragment=new MessageFragment();
                             transaction.add(framelayoutId,fragment, "MessageFragment");
                         }
-                        setTitleName(getResources().getString(R.string.string_home_tab_message));
+                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_message));
                         break;
                 }
             transaction.commit();
             tempFragment=fragment;
-    }
-
-    public void setTitleName(String titleName){
-        textView_titleName.setText(titleName);
     }
 
 }
