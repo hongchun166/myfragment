@@ -31,7 +31,7 @@
 
     <!-- home fragment 界面 -->
     <dimen name="dimen_home_tab_column_spilt">20dp</dimen>
-
+    <dimen name="dimen_home_propaganda_height">200dp</dimen>
 
 
 </resources>

@@ -4,9 +4,10 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     >
-    <View
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
+    <com.example.hongchun.myapplication.ui.view.CarouselViewpage
+        android:id="@+id/viewpage_carouselViewpage"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dimen_home_propaganda_height"
         android:background="@color/colorLine"
         />
 

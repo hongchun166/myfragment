@@ -9,9 +9,11 @@ import android.view.View;
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.activity.video.VideoActivity;
 import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
+import com.example.hongchun.myapplication.ui.view.CarouselViewpage;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
+import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,6 +27,8 @@ public class HomeFragment extends BaseFragment {
 
     Context context;
 
+    @ViewInject(R.id.viewpage_carouselViewpage)
+    CarouselViewpage carouselViewpage;
 
     @Override
     public void onAttach(Context context) {
@@ -35,8 +39,12 @@ public class HomeFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        List<Map<String,String>> pam=new ArrayList<>();
-
+        List<String> stringList=new ArrayList<>();
+        stringList.add("assets://experience/launch_1.png");
+        stringList.add("assets://experience/launch_2.png");
+        stringList.add("assets://experience/launch_3.png");
+        stringList.add("assets://experience/launch_4.png");
+        carouselViewpage.setDatas(context, stringList,true);
     }
 
     @Event(value = {R.id.textview_video,R.id.textview_game,R.id.textview_map
@@ -61,4 +69,15 @@ public class HomeFragment extends BaseFragment {
                     break;
             }
     }
+
+    @Override
+    public void onHiddenChanged(boolean hidden) {
+        super.onHiddenChanged(hidden);
+        if(hidden){
+            carouselViewpage.stopCarousel();
+        }else {
+            carouselViewpage.startCarousel();
+        }
+    }
+
 }
