@@ -44,7 +44,20 @@ public abstract class BaseActivity extends AppCompatActivity {
             getSupportActionBar().setDisplayShowTitleEnabled(false);
         }
     }
-
+    public void initToolBarAndBackButton(Toolbar mToolBar){
+        setSupportActionBar(mToolBar);
+        if (getSupportActionBar()!=null){
+            getSupportActionBar().setDisplayShowTitleEnabled(false);
+            //开启返回按钮
+            getSupportActionBar().setDisplayHomeAsUpEnabled(true);
+            mToolBar.setNavigationOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    finish();
+                }
+            });
+        }
+    }
     /**
      * 初始化带有返回按钮的toolbar
      * @param mToolBar

@@ -8,5 +8,15 @@
         android:orderInCategory="100"
         android:title="@string/action_settings"
         app:showAsAction="never" />
+    <item
+        android:id="@+id/action_code"
+        android:orderInCategory="100"
+        android:title="扫一扫"
+        app:showAsAction="never" />
+    <item
+        android:id="@+id/action_myselfcode"
+        android:orderInCategory="100"
+        android:title="我的二维码"
+        app:showAsAction="never" />
 
 </menu>

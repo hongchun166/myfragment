@@ -1,17 +1,22 @@
 package com.example.hongchun.myapplication.ui.activity;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.TextView;
 
 import com.example.hongchun.myapplication.R;
+import com.example.hongchun.myapplication.ui.activity.zxing.activity.CaptureActivity;
+import com.example.hongchun.myapplication.ui.activity.zxing.activity.EncodingActivity;
 import com.example.hongchun.myapplication.ui.fragment.home.CallFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.FriendsFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.HistoryFragment;
@@ -65,6 +70,27 @@ public class HomeActivity extends BaseExitActivity {
         initToolBar(mToolBar);
         setDefaultFragment();
 
+    }
+    //菜单
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        getMenuInflater().inflate(R.menu.menu_main, menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        //noinspection SimplifiableIfStatement
+        if (item.getItemId() == R.id.action_settings) {
+            return true;
+        }else if(item.getItemId()==R.id.action_code){
+            Intent intent=new Intent(this, CaptureActivity.class);
+            startActivityForResult(intent,100);
+        }else if(item.getItemId()==R.id.action_myselfcode){
+            Intent intent=new Intent(this, EncodingActivity.class);
+            startActivity(intent);
+        }
+        return super.onOptionsItemSelected(item);
     }
 
     private void setDefaultFragment(){

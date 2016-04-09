@@ -32,11 +32,8 @@
     <string name="string_home_tab_setting">设置</string>
 
 
-
-
     <!-- 提示文字 -->
     <string name="DEBUG_EVENT_LISTENER_TIPS">找不到监听事件</string>
-
 
 
 </resources>
