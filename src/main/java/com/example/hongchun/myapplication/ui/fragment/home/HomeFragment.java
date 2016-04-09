@@ -62,6 +62,8 @@ public class HomeFragment extends BaseFragment {
                 case R.id.textview_map:
                     break;
                 case R.id.textview_pay:
+
+
                     break;
                 case R.id.textview_read:
                     break;
