@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.example.hongchun.myapplication.ui.activity.map.MapActivity"
+    android:orientation="vertical"
+    >
+
+    <include layout="@layout/toolbar_layout"/>
+    <LinearLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        >
+        <Button
+            android:id="@+id/button_location"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="定位"
+            />
+        <TextView
+            android:id="@+id/textview_locationaddress"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical|right"
+            />
+    </LinearLayout>
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="20dp"/>
+
+    <!-- map-->
+    <com.baidu.mapapi.map.MapView
+        android:id="@+id/bmapView"
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:clickable="true" />
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal"
+    android:layout_marginTop="-80dp"
+    android:layout_gravity="center_horizontal"
+    android:gravity="center_horizontal"
+    >
+    <Button
+        android:id="@+id/button_navigation"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="导  航"
+        android:layout_gravity="center_horizontal"
+        />
+    <Button
+        android:id="@+id/button_locationnow"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="当前位置"
+        android:layout_gravity="right"
+        />
+    <Button
+        android:id="@+id/button_locationFlag"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="显示标注"
+        android:layout_gravity="right"
+        />
+
+</LinearLayout>
+
+</LinearLayout>

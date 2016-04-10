@@ -14,5 +14,8 @@ public class MConstants {
         public static final String SP_IS_FIRST_LOGIN="isFirstLogin";
 
     }
-
+    public  class BaiDuMapFinal{
+        public static final String ROUTE_PLAN_NODE = "routePlanNode";
+        public static final String APP_FOLDER_NAME = "BNSDKDemo";
+    }
 }

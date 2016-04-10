@@ -5,6 +5,8 @@ import android.app.Application;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 
+import com.baidu.mapapi.SDKInitializer;
+
 import org.xutils.x;
 
 import java.util.LinkedList;
@@ -30,6 +32,7 @@ public class MyApplication extends Application {
         application=this;
         x.Ext.init(this);
         x.Ext.setDebug(true);
+        SDKInitializer.initialize(this);
     }
 
 

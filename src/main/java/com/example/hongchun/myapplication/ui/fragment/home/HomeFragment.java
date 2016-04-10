@@ -7,6 +7,7 @@ import android.support.annotation.Nullable;
 import android.view.View;
 
 import com.example.hongchun.myapplication.R;
+import com.example.hongchun.myapplication.ui.activity.map.MapActivity;
 import com.example.hongchun.myapplication.ui.activity.video.VideoActivity;
 import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
 import com.example.hongchun.myapplication.ui.view.CarouselViewpage;
@@ -60,9 +61,10 @@ public class HomeFragment extends BaseFragment {
                 case R.id.textview_game:
                     break;
                 case R.id.textview_map:
+                    intent=new Intent(context,MapActivity.class);
+                    startActivity(intent);
                     break;
                 case R.id.textview_pay:
-
 
                     break;
                 case R.id.textview_read:

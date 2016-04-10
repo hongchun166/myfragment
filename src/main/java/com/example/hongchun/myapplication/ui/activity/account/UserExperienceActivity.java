@@ -41,6 +41,8 @@ public class UserExperienceActivity extends BaseNormActivity {
     @ViewInject(R.id.exerience_RadioGroup)
     RadioGroup radioGroup;
 
+    RadioButton tempRadioButton;
+
     List<String> datas;
     ExperienceVPAdapter mAdapter;
 
@@ -70,6 +72,7 @@ public class UserExperienceActivity extends BaseNormActivity {
                     radioBtn.setEnabled(false);
                     if (i == 0) {
                         radioBtn.setChecked(true);
+                        tempRadioButton=radioBtn;
                     }
                     radioGroup.addView(viewRadioBtn);
                 }
@@ -95,8 +98,11 @@ public class UserExperienceActivity extends BaseNormActivity {
             @Override
             public void onPageSelected(int position) {
 
+                tempRadioButton.setChecked(false);
                 RadioButton radiobtn= ((RadioButton)radioGroup.getChildAt(position).findViewById(R.id.radioButton_point));
                 radiobtn.setChecked(true);
+                tempRadioButton=radiobtn;
+
                 if(position==datas.size()-1){
                     btn_experience.setVisibility(View.VISIBLE);
                 }else {
