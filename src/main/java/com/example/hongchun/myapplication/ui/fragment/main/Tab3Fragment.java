@@ -9,11 +9,15 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.example.hongchun.myapplication.R;
+import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
+
+import org.xutils.view.annotation.ContentView;
 
 /**
  * Created by TianHongChun on 2016/4/5.
  */
-public class Tab3Fragment extends Fragment {
+@ContentView(R.layout.fragment_tab3_layout)
+public class Tab3Fragment extends BaseFragment {
 
 
     Context context;
@@ -24,10 +28,18 @@ public class Tab3Fragment extends Fragment {
         this.context=context;
     }
 
-    @Nullable
     @Override
-    public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view=inflater.inflate(R.layout.fragment_tab3_layout, container, false);
-        return view;
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+
     }
 }

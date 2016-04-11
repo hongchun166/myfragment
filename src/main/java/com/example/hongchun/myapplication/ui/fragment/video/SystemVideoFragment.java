@@ -40,6 +40,17 @@ public class SystemVideoFragment extends BaseFragment {
 
 
     }
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+
+
+
     @Event(value = R.id.button_start,type = View.OnClickListener.class)
     private void onEvenOnclick(View view){
         if(view.getId()==R.id.button_start){

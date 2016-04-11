@@ -49,6 +49,16 @@ public class HomeFragment extends BaseFragment {
         carouselViewpage.setDatas(context, stringList,true);
     }
 
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+
     @Event(value = {R.id.textview_video,R.id.textview_game,R.id.textview_map
             ,R.id.textview_pay,R.id.textview_read,R.id.textview_setting}
             ,type = View.OnClickListener.class)

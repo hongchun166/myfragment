@@ -35,4 +35,14 @@ public class CallFragment extends BaseFragment {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
     }
+
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+
+    }
 }

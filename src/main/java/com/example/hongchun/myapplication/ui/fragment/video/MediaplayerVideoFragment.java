@@ -49,11 +49,16 @@ public class MediaplayerVideoFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        mp=new MediaPlayer();
-        initEven();
+
     }
 
-    private void initEven(){
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+        mp=new MediaPlayer();
+    }
+
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
         mp.setOnCompletionListener(new MediaPlayer.OnCompletionListener() {
             @Override
             public void onCompletion(MediaPlayer mp) {
@@ -61,7 +66,6 @@ public class MediaplayerVideoFragment extends BaseFragment {
             }
         });
     }
-
     @Event(value ={R.id.button_play,R.id.button_pause,R.id.button_stop},type = View.OnClickListener.class)
     private void onEvenOnclick(View view){
         switch (view.getId()){

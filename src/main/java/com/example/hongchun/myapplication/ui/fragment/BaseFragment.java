@@ -12,7 +12,10 @@ import org.xutils.x;
 /**
  * Created by TianHongChun on 2016/4/6.
  */
-public class BaseFragment extends Fragment {
+public abstract class BaseFragment extends Fragment {
+    public  abstract void initView(View view, @Nullable Bundle savedInstanceState);
+   public abstract void initEven(View view, @Nullable Bundle savedInstanceState);
+
 
     private boolean injected = false;
 
@@ -28,5 +31,7 @@ public class BaseFragment extends Fragment {
         if (!injected) {
             x.view().inject(this, this.getView());
         }
+        initView(view,savedInstanceState);
+        initEven(view,savedInstanceState);
     }
 }

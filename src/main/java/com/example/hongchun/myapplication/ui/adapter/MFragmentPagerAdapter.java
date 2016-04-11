@@ -8,6 +8,7 @@ import java.util.List;
 
 /**
  * Created by jjand on 2015/12/14.
+ * mainactivity fragmentViewpage adapter
  */
 public class MFragmentPagerAdapter extends FragmentPagerAdapter {
     private List<Fragment> fragments;

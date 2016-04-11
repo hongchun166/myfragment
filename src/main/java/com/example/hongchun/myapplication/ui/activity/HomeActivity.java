@@ -2,7 +2,6 @@ package com.example.hongchun.myapplication.ui.activity;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.PersistableBundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
@@ -19,11 +18,10 @@ import com.example.hongchun.myapplication.ui.activity.zxing.activity.CaptureActi
 import com.example.hongchun.myapplication.ui.activity.zxing.activity.EncodingActivity;
 import com.example.hongchun.myapplication.ui.fragment.home.CallFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.FriendsFragment;
-import com.example.hongchun.myapplication.ui.fragment.home.HistoryFragment;
+import com.example.hongchun.myapplication.ui.fragment.home.ContactPersonFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.HomeFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.MessageFragment;
 
-import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -49,8 +47,8 @@ public class HomeActivity extends BaseExitActivity {
     @ViewInject(R.id.radiobutton_call)
     RadioButton radioButton_call;
 
-    @ViewInject(R.id.radiobutton_history)
-    RadioButton radioButton_history;
+    @ViewInject(R.id.radiobutton_ContactPerson)
+    RadioButton radioButtonContactPerson;
 
     @ViewInject(R.id.radiobutton_home)
     RadioButton radioButton_home;
@@ -144,13 +142,13 @@ public class HomeActivity extends BaseExitActivity {
                         }
                         setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_home));
                         break;
-                    case R.id.radiobutton_history:
-                        fragment=fragmentManager.findFragmentByTag("HistoryFragment");
+                    case R.id.radiobutton_ContactPerson:
+                        fragment=fragmentManager.findFragmentByTag("ContactPersonFragment");
                         if(fragment!=null && fragment.isAdded()){
                             transaction.show(fragment);
                         }else {
-                            fragment=new HistoryFragment();
-                            transaction.add(framelayoutId,fragment, "HistoryFragment");
+                            fragment=new ContactPersonFragment();
+                            transaction.add(framelayoutId,fragment, "ContactPersonFragment");
                         }
                         setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_history));
                         break;

@@ -34,4 +34,14 @@ public class MessageFragment extends BaseFragment {
         super.onViewCreated(view, savedInstanceState);
         LogUtil.d("MessageFragment=onCreateView==");
     }
+
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+
+    }
 }

@@ -45,8 +45,19 @@ public class VideoViewVideoFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        funOne();
     }
+
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
+        String uri="http://down13.68mtv.com/MP4/mp413/伤感一哥-亲爱的你要走[68mtv.com].mp4";
+        videoView.setMediaController(new MediaController(context));
+        videoView.setVideoURI(Uri.parse(uri));
+    }
+
     @Event(value = {R.id.button_start,R.id.button_puse,R.id.button_stop},type = View.OnClickListener.class)
     private void onEvenOnclick(View view){
         switch (view.getId()){
@@ -64,10 +75,5 @@ public class VideoViewVideoFragment extends BaseFragment {
                 break;
         }
     }
-    private void funOne(){
-        String uri="http://down13.68mtv.com/MP4/mp413/伤感一哥-亲爱的你要走[68mtv.com].mp4";
-        videoView.setMediaController(new MediaController(context));
-        videoView.setVideoURI(Uri.parse(uri));
 
-    }
 }

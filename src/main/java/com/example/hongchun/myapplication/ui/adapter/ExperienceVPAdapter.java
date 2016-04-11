@@ -17,6 +17,7 @@ import java.util.List;
 
 /**
  * Created by HongChun on 2016/4/4.
+ * 欢迎页面viewpage适配器
  */
 public class ExperienceVPAdapter extends PagerAdapter {
 
