@@ -1,20 +1,15 @@
 package com.example.hongchun.myapplication.ui.activity;
 
-import android.app.Activity;
 import android.content.res.Configuration;
 import android.content.res.Resources;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
-import android.view.KeyEvent;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.example.hongchun.myapplication.R;
-import com.example.hongchun.myapplication.ui.application.MyApplication;
+import com.example.hongchun.myapplication.application.MyApplication;
 
-import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
 public abstract class BaseActivity extends AppCompatActivity {

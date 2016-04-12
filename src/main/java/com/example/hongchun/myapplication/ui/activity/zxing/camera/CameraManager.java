@@ -27,7 +27,7 @@ import android.util.Log;
 import android.view.SurfaceHolder;
 
 
-import com.example.hongchun.myapplication.ui.application.MyApplication;
+import com.example.hongchun.myapplication.application.MyApplication;
 import com.example.hongchun.myapplication.util.MyUtils;
 
 import java.io.IOException;

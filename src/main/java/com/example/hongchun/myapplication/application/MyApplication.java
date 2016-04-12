@@ -1,9 +1,7 @@
-package com.example.hongchun.myapplication.ui.application;
+package com.example.hongchun.myapplication.application;
 
 import android.app.Activity;
 import android.app.Application;
-import android.content.res.Configuration;
-import android.content.res.Resources;
 
 import com.baidu.mapapi.SDKInitializer;
 

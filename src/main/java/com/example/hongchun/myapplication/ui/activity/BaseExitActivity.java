@@ -5,9 +5,7 @@ import android.view.KeyEvent;
 import android.widget.Toast;
 
 import com.example.hongchun.myapplication.R;
-import com.example.hongchun.myapplication.ui.application.MyApplication;
-
-import org.xutils.x;
+import com.example.hongchun.myapplication.application.MyApplication;
 
 public class BaseExitActivity extends BaseActivity {
 
