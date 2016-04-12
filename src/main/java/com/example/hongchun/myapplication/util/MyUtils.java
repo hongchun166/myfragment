@@ -38,25 +38,6 @@ import java.util.regex.Pattern;
  */
 public class MyUtils {
 
-    static Random random=new Random();
-    private static char[] chars = new char[] { '0', '1', '2', '3', '4', '5',
-            '6', '7', '8', '9', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I',
-            'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V',
-            'W', 'X', 'Y', 'Z', 'a', 'b', 'c', 'd', 'e', 'f', 'g', 'h', 'i',
-            'j', 'k', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'u', 'v',
-            'w', 'x', 'y', 'z' };
-    /**
-     * 取随机的字符串
-     * @return
-     */
-    public static String getRandomString(int length) {
-        char[] r = new char[length];
-        for (int i = 0; i < r.length; i++) {
-            r[i] = chars[random.nextInt(chars.length)];
-        }
-        return String.valueOf(r);
-    }
-
     /**
      * MD5加密
      * @param str
@@ -87,18 +68,6 @@ public class MyUtils {
         }
         return newStr;
     }
-
-    /**
-     * 获取屏幕大小
-     * @param context
-     * @return
-     */
-    public static Display getWindownSize(Context context){
-        WindowManager wm = (WindowManager)context.getSystemService(Context.WINDOW_SERVICE);
-        Display dm= wm.getDefaultDisplay();
-        return dm;
-    }
-
 
     /**
      * 检查是否是手机格式
@@ -156,54 +125,6 @@ public class MyUtils {
 
     }
 
-
-    /**
-     * 判断是否全部为中文字符
-     * @param s
-     * @return
-     */
-    public static boolean checkfilename(String s){
-        s=new String(s.getBytes());//用GBK编码
-        String pattern="[\u4e00-\u9fa5]+";
-        Pattern p= Pattern.compile(pattern);
-        Matcher result=p.matcher(s);
-        return result.matches(); //是否含有中文字符
-    }
-
-    /**
-     * 隐藏输入法
-     * @param context
-     */
-    public static void hideSoftInput(Context context){
-        if(context==null){
-            return;
-        }
-        InputMethodManager imm = (InputMethodManager)context.getSystemService(Service.INPUT_METHOD_SERVICE);
-        imm.hideSoftInputFromWindow(((Activity) context).getCurrentFocus().getWindowToken(), InputMethodManager.HIDE_NOT_ALWAYS);
-    }
-
-
-    /**
-     * 设置字体颜色
-     */
-    public static SpannableStringBuilder textAddColor(String content,int start,int end,int color){
-        /// 改变字体hint颜色， 也可改变大小....
-        if(content==null||content.equals("")){
-            content="";
-        }
-        if(start<0){
-            start=0;
-        }
-        if(end<0){
-            end=content.length();
-        }
-        SpannableStringBuilder ssb = new SpannableStringBuilder(content);
-        ForegroundColorSpan fcs=new ForegroundColorSpan(color);
-        ssb.setSpan(fcs, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE);
-        // 设置hint<br />
-        return ssb;
-    }
-
     /**
      * 获取当前时间Time
      * @return
@@ -259,58 +180,6 @@ public class MyUtils {
         }
         return false;
     }
-    /**
-     * 将px值转换为dip或dp值，保证尺寸大小不变
-     *
-     * @param pxValue
-     * @param pxValue
-     *            （DisplayMetrics类中属性density）
-     * @return
-     */
-    public static int px2dip(Context context, float pxValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (pxValue / scale + 0.5f);
-    }
-
-    /**
-     * 将dip或dp值转换为px值，保证尺寸大小不变
-     *
-     * @param dipValue
-     * @param dipValue
-     *            （DisplayMetrics类中属性density）
-     * @return
-     */
-    public static int dip2px(Context context, float dipValue) {
-        final float scale = context.getResources().getDisplayMetrics().density;
-        return (int) (dipValue * scale + 0.5f);
-    }
-
-    /**
-     * 将px值转换为sp值，保证文字大小不变
-     *
-     * @param pxValue
-     * @param pxValue
-     *            （DisplayMetrics类中属性scaledDensity）
-     * @return
-     */
-    public static int px2sp(Context context, float pxValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-
-        return (int) (pxValue / fontScale + 0.5f);
-    }
-
-    /**
-     * 将sp值转换为px值，保证文字大小不变
-     *
-     * @param spValue
-     * @param spValue
-     *            （DisplayMetrics类中属性scaledDensity）
-     * @return
-     */
-    public static int sp2px(Context context, float spValue) {
-        final float fontScale = context.getResources().getDisplayMetrics().scaledDensity;
-        return (int) (spValue * fontScale + 0.5f);
-    }
 
     /**
      * 判断某个服务是否正在运行的方法
@@ -339,62 +208,4 @@ public class MyUtils {
     }
 
 
-    /**
-     * 将字符串中的中文转化为拼音,其他字符不变
-     *
-     * @param inputString
-     * @return
-     */
-    public static String getPingYin(String inputString) {
-        HanyuPinyinOutputFormat format = new HanyuPinyinOutputFormat();
-        format.setCaseType(HanyuPinyinCaseType.LOWERCASE);
-        format.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        format.setVCharType(HanyuPinyinVCharType.WITH_V);
-
-        char[] input = inputString.trim().toCharArray();
-        String output = "";
-
-        try {
-            for (int i = 0; i < input.length; i++) {
-                if (java.lang.Character.toString(input[i]).
-                        matches("[\\u4E00-\\u9FA5]+")) {
-                    String[] temp = PinyinHelper.
-                            toHanyuPinyinStringArray(input[i],
-                                    format);
-                    output += temp[0];
-                } else
-                    output += java.lang.Character.toString(
-                            input[i]);
-            }
-        } catch (BadHanyuPinyinOutputFormatCombination e) {
-            e.printStackTrace();
-        }
-        return output;
-    }
-
-    /**
-     * 汉字转换位汉语拼音首字母，英文字符不变
-     * @param chines 汉字
-     * @return 拼音
-     */
-    public static String converterToFirstSpell(String chines){
-        String pinyinName = "";
-
-        char[] nameChar = chines.toCharArray();
-        HanyuPinyinOutputFormat defaultFormat = new HanyuPinyinOutputFormat();
-        defaultFormat.setCaseType(HanyuPinyinCaseType.UPPERCASE);
-        defaultFormat.setToneType(HanyuPinyinToneType.WITHOUT_TONE);
-        for (int i = 0; i < nameChar.length; i++) {
-            if (nameChar[i] > 128) {
-                try {
-                    pinyinName += PinyinHelper.toHanyuPinyinStringArray(nameChar[i], defaultFormat)[0].charAt(0);
-                } catch (BadHanyuPinyinOutputFormatCombination e) {
-                    e.printStackTrace();
-                }
-            }else{
-                pinyinName += nameChar[i];
-            }
-        }
-        return pinyinName;
-    }
 }

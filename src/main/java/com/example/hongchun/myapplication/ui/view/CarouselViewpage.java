@@ -51,7 +51,6 @@ public class CarouselViewpage extends ViewPager {
         @Override
         public void handleMessage(Message msg) {
             super.handleMessage(msg);
-            LogUtil.i("======handleMessage===");
             if(msg.what==START){
                 if(isAutoCarousel()){
                     int currentItem=getCurrentItem()+1;

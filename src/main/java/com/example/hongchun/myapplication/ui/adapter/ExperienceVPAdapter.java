@@ -1,6 +1,7 @@
 package com.example.hongchun.myapplication.ui.adapter;
 
 import android.content.Context;
+import android.provider.ContactsContract;
 import android.support.v4.view.PagerAdapter;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -19,7 +20,7 @@ import java.util.List;
  * Created by HongChun on 2016/4/4.
  * 欢迎页面viewpage适配器
  */
-public class ExperienceVPAdapter extends PagerAdapter {
+public class ExperienceVPAdapter extends PagerAdapter  {
 
     Context context;
     LayoutInflater inflater;

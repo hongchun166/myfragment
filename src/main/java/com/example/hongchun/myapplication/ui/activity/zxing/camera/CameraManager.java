@@ -28,6 +28,7 @@ import android.view.SurfaceHolder;
 
 
 import com.example.hongchun.myapplication.application.MyApplication;
+import com.example.hongchun.myapplication.util.MyDeviceUtil;
 import com.example.hongchun.myapplication.util.MyUtils;
 
 import java.io.IOException;
@@ -42,10 +43,10 @@ public final class CameraManager {
 
   private static final String TAG = CameraManager.class.getSimpleName();
 
-  private static final int MIN_FRAME_WIDTH = MyUtils.dip2px(MyApplication.getApplication(), 180);
-  private static final int MIN_FRAME_HEIGHT = MyUtils.dip2px(MyApplication.getApplication(), 180);
-  private static final int MAX_FRAME_WIDTH = MyUtils.dip2px(MyApplication.getApplication(), 240);
-  private static final int MAX_FRAME_HEIGHT = MyUtils.dip2px(MyApplication.getApplication(),240);
+  private static final int MIN_FRAME_WIDTH = MyDeviceUtil.dip2px(MyApplication.getApplication(), 180);
+  private static final int MIN_FRAME_HEIGHT = MyDeviceUtil.dip2px(MyApplication.getApplication(), 180);
+  private static final int MAX_FRAME_WIDTH = MyDeviceUtil.dip2px(MyApplication.getApplication(), 240);
+  private static final int MAX_FRAME_HEIGHT = MyDeviceUtil.dip2px(MyApplication.getApplication(),240);
 
   private static CameraManager cameraManager;
 

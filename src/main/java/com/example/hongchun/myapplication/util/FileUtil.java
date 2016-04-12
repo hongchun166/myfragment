@@ -221,14 +221,14 @@ public class FileUtil {
     //生成图片文件名称，按userid_20150921092011的.jpg的格式
     public static String getFileName(Context context){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        String ranStr=MyUtils.getRandomString(6);
+        String ranStr=MStringUtils.getRandomString(6);
         String filename = ranStr+"_"+sdf.format(new Date())+".jpg";
         return filename;
     }
 
     public static String getFileNameNoEndwith(){
         SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMddHHmmssSSS");
-        String ranStr=MyUtils.getRandomString(6);
+        String ranStr=MStringUtils.getRandomString(6);
         return (ranStr+"_"+sdf.format(new Date()));
     }
 

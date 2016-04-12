@@ -5,6 +5,17 @@
     android:orientation="vertical"
     android:id="@+id/itemRootView"
     >
+   <TextView
+       android:id="@+id/textView_group"
+       android:layout_width="match_parent"
+       android:layout_height="30dp"
+       android:background="@android:color/darker_gray"
+       android:gravity="center_vertical|left"
+       android:paddingLeft="@dimen/dimen_boundary_width"
+       android:textColor="@android:color/background_dark"
+       android:textSize="@dimen/dimen_textsize_large_xl"
+       android:visibility="gone"
+       />
     <LinearLayout
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
