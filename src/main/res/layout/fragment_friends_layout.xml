@@ -7,15 +7,12 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <TextView
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="我的好友"
-            android:layout_centerInParent="true"
-            android:textColor="@color/colorContentTextColor"
-            android:textSize="@dimen/dimen_textsize_large_xxl"
-            android:layout_gravity="center"
-            />
+        <com.example.hongchun.myapplication.ui.view.PinnedHeaderRecyclerView
+            android:id="@+id/recyclerView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            >
+        </com.example.hongchun.myapplication.ui.view.PinnedHeaderRecyclerView>
         <com.example.hongchun.myapplication.ui.view.AlphabetView
             android:id="@+id/alphabetView"
             android:layout_width="30dp"

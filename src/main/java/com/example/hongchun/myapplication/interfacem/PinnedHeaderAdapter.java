@@ -35,9 +35,8 @@ public interface PinnedHeaderAdapter {
     /**
      * Configures the pinned header view to match the first visible list item.
      *
-     * @param header pinned header view.
-     * @param position position of the first visible list item.
-     * @param alpha fading of the header view, between 0 and 255.
+     * @param headerView pinned header view.
+     * @param firstPosition position of the first visible list item.
      */
-    void configurePinnedHeader(View header, int position, int alpha);
+    void configurePinnedHeader(View headerView, int firstPosition);
 }
