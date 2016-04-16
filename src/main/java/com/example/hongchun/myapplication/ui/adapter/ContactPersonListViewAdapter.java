@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AbsListView;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -15,7 +16,6 @@ import com.example.hongchun.myapplication.data.pojo.ContactPersonPojo;
 import com.example.hongchun.myapplication.interfacem.PinnedHeaderAdapter;
 import com.example.hongchun.myapplication.ui.dialog.ContactListDialog;
 import com.example.hongchun.myapplication.util.ImagerUtils;
-import com.example.hongchun.myapplication.util.MStringUtils;
 
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
@@ -26,14 +26,13 @@ import java.util.List;
 /**
  * Created by TianHongChun on 2016/4/11.
  */
-public class TestContactPersonRecyclerAdapter extends BaseAdapter implements PinnedHeaderAdapter {
+public class ContactPersonListViewAdapter extends BaseAdapter implements PinnedHeaderAdapter {
 
     private  Context context;
     LayoutInflater inflater;
     private List<ContactPersonPojo> contactPersonPojoList;
 
-
-    public TestContactPersonRecyclerAdapter(Context context, List<ContactPersonPojo> contactPersonPojoList){
+    public ContactPersonListViewAdapter(Context context, List<ContactPersonPojo> contactPersonPojoList){
         this.context=context;
         inflater=LayoutInflater.from(context);
         this.contactPersonPojoList=contactPersonPojoList;
@@ -46,7 +45,7 @@ public class TestContactPersonRecyclerAdapter extends BaseAdapter implements Pin
 
     @Override
     public Object getItem(int position) {
-        return contactPersonPojoList.get(position);
+        return (position >= 0 && position < contactPersonPojoList.size()) ? contactPersonPojoList.get(position) : 0;
     }
 
     @Override
@@ -55,50 +54,34 @@ public class TestContactPersonRecyclerAdapter extends BaseAdapter implements Pin
     }
 
     @Override
-    public int getViewTypeCount() {
-        return super.getViewTypeCount();
-    }
-
-    @Override
-    public int getItemViewType(int position) {
-        return super.getItemViewType(position);
-    }
-
-    @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+        ContactPersonPojo contactPersonPojo=contactPersonPojoList.get(position);
         ItemViewHolder itemViewHolder=null;
+
         if(convertView==null){
             convertView=inflater.inflate(R.layout.contact_person_item_layout,null);
             itemViewHolder=new ItemViewHolder(convertView);
             x.view().inject(itemViewHolder,convertView);
-            convertView.setTag(convertView);
+            convertView.setTag(itemViewHolder);
         }else {
             itemViewHolder=(ItemViewHolder)convertView.getTag();
         }
-        ContactPersonPojo contactPersonPojo=contactPersonPojoList.get(position);
         if(contactPersonPojo!=null){
             itemViewHolder.setContactPersonPojo(contactPersonPojo);
             itemViewHolder.getTextViewPersonName().setText(contactPersonPojo.getPersonName());
             itemViewHolder.getTextViewPersonPhone().setText(contactPersonPojo.getPersonPhone());
             x.image().bind(itemViewHolder.getImageViewPersonHead(), "assets://avatar.jpg", ImagerUtils.getCircularImageOptions());
-
             //根据position获取分类的首字母的char ascii值
-            String firstLetter=MStringUtils.converterToFirstSpell(contactPersonPojo.getPersonName()).substring(0,1);
-            // 正则表达式，判断首字母是否是英文字母
-            if(firstLetter.matches("[A-Z]")){
-            }else{
-                firstLetter="#";
-            }
-            int section =firstLetter.toUpperCase().charAt(0);
+            String firstLetter=contactPersonPojo.getSortLetter();
+            int section =firstLetter.charAt(0);
             //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
             if(position == getPositionForSection(section)){
                 itemViewHolder.getTextViewGroup().setVisibility(View.VISIBLE);
-                itemViewHolder.getTextViewGroup().setText(firstLetter);
+                itemViewHolder.getTextViewGroup().setText(contactPersonPojo.getSortLetter());
             }else{
                 itemViewHolder.getTextViewGroup().setVisibility(View.GONE);
             }
         }
-
         return convertView;
     }
 
@@ -107,7 +90,7 @@ public class TestContactPersonRecyclerAdapter extends BaseAdapter implements Pin
      */
     public int getPositionForSection(int section) {
         for (int i = 0; i <getCount(); i++) {
-            String sortStr = MStringUtils.converterToFirstSpell((contactPersonPojoList.get(i).getPersonName())).substring(0,1);
+            String sortStr =contactPersonPojoList.get(i).getSortLetter();
             if(sortStr.matches("[A-Z]")){
             }else{
                 sortStr="#";
@@ -122,36 +105,45 @@ public class TestContactPersonRecyclerAdapter extends BaseAdapter implements Pin
 
     @Override
     public int getPinnedHeaderState(int position) {
-        ContactPersonPojo contactPersonPojo=contactPersonPojoList.get(position);
-        //根据position获取分类的首字母的char ascii值
-        String firstLetter=MStringUtils.converterToFirstSpell(contactPersonPojo.getPersonName()).substring(0,1);
-        // 正则表达式，判断首字母是否是英文字母
-        if(firstLetter.matches("[A-Z]")){
-        }else{
-            firstLetter="#";
+        if (position < 0) {
+            return PINNED_HEADER_GONE;
         }
-        int section =firstLetter.toUpperCase().charAt(0);
-        //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
-        if(position == getPositionForSection(section)){
-            // 是组item,headview可以移除了
-            return PinnedHeaderAdapter.PINNED_HEADER_GONE;
-        }else{
-            // 不是组,headview显示
-            return PinnedHeaderAdapter.PINNED_HEADER_VISIBLE;
+        ContactPersonPojo item = (ContactPersonPojo) getItem(position);
+        ContactPersonPojo itemNext = (ContactPersonPojo) getItem(position + 1);
+        boolean isNextSection =false;
+        boolean isSection=false;
+        if(null!=itemNext){
+            if(position+1== getPositionForSection(itemNext.getSortLetter().charAt(0))){
+                isNextSection=true;
+            }
         }
+        if(position == getPositionForSection(item.getSortLetter().charAt(0))){
+            isSection=true;
+        }
+        if (!isSection && isNextSection) {
+            return PINNED_HEADER_PUSHED_UP;
+        }
+        return PINNED_HEADER_VISIBLE;
     }
 
     @Override
-    public void configurePinnedHeader(View headerView, int firstPosition) {
-        TextView textView=(TextView)headerView;
+    public void configurePinnedHeader(View headerView, int firstPosition,int alpha) {
+        TextView textView=(TextView)headerView.findViewById(R.id.textView_group);
         ContactPersonPojo contactPersonPojo=contactPersonPojoList.get(firstPosition);
-        String firstLetter=MStringUtils.converterToFirstSpell(contactPersonPojo.getPersonName()).substring(0,1);
+       String firstLetter= contactPersonPojo.getSortLetter();
         // 正则表达式，判断首字母是否是英文字母
         if(firstLetter.matches("[A-Z]")){
         }else{
             firstLetter="#";
         }
         textView.setText(firstLetter);
+    }
+
+    @Override
+    public View getPinnedHeaderView(Context context) {
+        View view=LayoutInflater.from(context).inflate(R.layout.contact_person_group_layout,null);
+        view.setLayoutParams(new AbsListView.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT));
+        return view;
     }
 
     public class ItemViewHolder {
@@ -193,7 +185,6 @@ public class TestContactPersonRecyclerAdapter extends BaseAdapter implements Pin
                     ContactListDialog.getInstance()
                             .setContactPersonPojo(getContactPersonPojo())
                             .show(((AppCompatActivity) context).getSupportFragmentManager());
-
                     break;
             }
             return true;

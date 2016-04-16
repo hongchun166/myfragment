@@ -7,12 +7,14 @@
     <FrameLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent">
-        <com.example.hongchun.myapplication.ui.view.PinnedHeaderRecyclerView
+        <com.example.hongchun.myapplication.ui.view.PinnedHeaderListView
             android:id="@+id/recyclerView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:divider="@color/colorLine"
+            android:dividerHeight="1px"
             >
-        </com.example.hongchun.myapplication.ui.view.PinnedHeaderRecyclerView>
+        </com.example.hongchun.myapplication.ui.view.PinnedHeaderListView>
         <com.example.hongchun.myapplication.ui.view.AlphabetView
             android:id="@+id/alphabetView"
             android:layout_width="30dp"

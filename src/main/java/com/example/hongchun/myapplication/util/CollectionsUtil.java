@@ -25,5 +25,15 @@ public class CollectionsUtil {
             });
         }
     }
+    public static   void sortContactPersonTest(List<ContactPersonPojo> list){
+        if(list.size()>1){
+            Collections.sort(list, new Comparator<ContactPersonPojo>() {
+                @Override
+                public int compare(ContactPersonPojo lhs, ContactPersonPojo rhs) {
+                    return lhs.getPinyin().compareToIgnoreCase(rhs.getPinyin());
+                }
+            });
+        }
+    }
 }
 

@@ -84,12 +84,8 @@ public class ContactPersonRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
                 x.image().bind(itemViewHolder.getImageViewPersonHead(), "assets://avatar.jpg", ImagerUtils.getCircularImageOptions());
 
                 //根据position获取分类的首字母的char ascii值
-                String firstLetter=MStringUtils.converterToFirstSpell(contactPersonPojo.getPersonName()).substring(0,1);
-                // 正则表达式，判断首字母是否是英文字母
-                if(firstLetter.matches("[A-Z]")){
-                }else{
-                    firstLetter="#";
-                }
+                String firstLetter=contactPersonPojo.getSortLetter();
+
                 int section =firstLetter.toUpperCase().charAt(0);
                 //如果当前位置等于该分类首字母的Char的位置 ，则认为是第一次出现
                 if(position == getPositionForSection(section)){
@@ -108,11 +104,7 @@ public class ContactPersonRecyclerAdapter extends RecyclerView.Adapter<RecyclerV
      */
     public int getPositionForSection(int section) {
         for (int i = 0; i <getItemCount(); i++) {
-            String sortStr = MStringUtils.converterToFirstSpell((contactPersonPojoList.get(i).getPersonName())).substring(0,1);
-            if(sortStr.matches("[A-Z]")){
-            }else{
-                sortStr="#";
-            }
+            String sortStr =contactPersonPojoList.get(i).getSortLetter();
             char firstChar = sortStr.toUpperCase().charAt(0);
             if (firstChar == section) {
                 return i;

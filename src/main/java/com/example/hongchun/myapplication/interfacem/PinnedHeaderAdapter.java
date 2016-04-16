@@ -1,5 +1,6 @@
 package com.example.hongchun.myapplication.interfacem;
 
+import android.content.Context;
 import android.view.View;
 
 /**
@@ -38,5 +39,13 @@ public interface PinnedHeaderAdapter {
      * @param headerView pinned header view.
      * @param firstPosition position of the first visible list item.
      */
-    void configurePinnedHeader(View headerView, int firstPosition);
+    void configurePinnedHeader(View headerView, int firstPosition,int alpha);
+
+    /**
+     *
+     * @param context
+     * @return null
+     */
+    View getPinnedHeaderView(Context context);
+
 }

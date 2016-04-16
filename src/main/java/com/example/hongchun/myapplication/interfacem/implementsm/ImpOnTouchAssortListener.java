@@ -52,7 +52,7 @@ public  class ImpOnTouchAssortListener implements OnTouchAssortListener {
                 textViewContent.setTextColor(Color.parseColor("#ffffff"));
                 textViewContent.setTextSize(26);
                 textViewContent.setGravity(Gravity.CENTER);
-                relativeLayout.addView(textViewContent, new ViewGroup.LayoutParams(120, 120));
+                relativeLayout.addView(textViewContent, new ViewGroup.LayoutParams(150, 150));
                 x.view().inject(this, relativeLayout);
 
                 popupWindow=new PopupWindow(relativeLayout, ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT,

@@ -17,8 +17,8 @@ import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.activity.zxing.activity.CaptureActivity;
 import com.example.hongchun.myapplication.ui.activity.zxing.activity.EncodingActivity;
 import com.example.hongchun.myapplication.ui.fragment.home.CallFragment;
-import com.example.hongchun.myapplication.ui.fragment.home.FriendsFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.ContactPersonFragment;
+import com.example.hongchun.myapplication.ui.fragment.home.FriendsFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.HomeFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.MessageFragment;
 
@@ -112,15 +112,15 @@ public class HomeActivity extends BaseExitActivity {
             int framelayoutId=R.id.framelayout;
 
                 switch (checkedId){
-                    case R.id.radiobutton_friends:
-                        fragment=fragmentManager.findFragmentByTag("FriendsFragment");
+                    case R.id.radiobutton_ContactPerson:
+                        fragment=fragmentManager.findFragmentByTag("ContactPersonFragment");
                         if(fragment!=null && fragment.isAdded()){
                             transaction.show(fragment);
                         }else {
-                            fragment=new FriendsFragment();
-                            transaction.add(framelayoutId,fragment, "FriendsFragment");
+                            fragment=new ContactPersonFragment();
+                            transaction.add(framelayoutId,fragment, "ContactPersonFragment");
                         }
-                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_friends));
+                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_history));
                         break;
                     case R.id.radiobutton_call:
                         fragment=fragmentManager.findFragmentByTag("CallFragment");
@@ -142,15 +142,15 @@ public class HomeActivity extends BaseExitActivity {
                         }
                         setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_home));
                         break;
-                    case R.id.radiobutton_ContactPerson:
-                        fragment=fragmentManager.findFragmentByTag("ContactPersonFragment");
+                    case R.id.radiobutton_friends:
+                        fragment=fragmentManager.findFragmentByTag("FriendsFragment");
                         if(fragment!=null && fragment.isAdded()){
                             transaction.show(fragment);
                         }else {
-                            fragment=new ContactPersonFragment();
-                            transaction.add(framelayoutId,fragment, "ContactPersonFragment");
+                            fragment=new FriendsFragment();
+                            transaction.add(framelayoutId,fragment, "FriendsFragment");
                         }
-                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_history));
+                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_friends));
                         break;
                     case R.id.radiobutton_message:
                         fragment=fragmentManager.findFragmentByTag("MessageFragment");
