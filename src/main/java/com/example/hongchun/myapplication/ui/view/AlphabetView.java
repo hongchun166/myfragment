@@ -23,7 +23,7 @@ import org.xutils.x;
 
 /**
  * Created by TianHongChun on 2016/4/11.
- *  通讯录字母列表view
+ *  字母列表view
  *
  */
 public class AlphabetView extends View {

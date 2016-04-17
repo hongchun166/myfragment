@@ -8,6 +8,7 @@ import android.os.Message;
 import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -30,6 +31,7 @@ import com.google.gson.Gson;
 
 import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
@@ -50,6 +52,9 @@ public class FriendsFragment extends BaseFragment   {
 
     @ViewInject(R.id.recyclerView)
     RecyclerView recyclerView;
+
+    @ViewInject(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
     ContactPersonRecyclerAdapter mAdapter;
     List<ContactPersonPojo> contactPersonPojoList;
@@ -80,11 +85,11 @@ public class FriendsFragment extends BaseFragment   {
     }
     @Override
     public void initEven(View view, @Nullable Bundle savedInstanceState) {
-        alphabetView.setOnTouchAssortListener(new ImpOnTouchAssortListener(context){
+        alphabetView.setOnTouchAssortListener(new ImpOnTouchAssortListener(context) {
             @Override
             public void onTouchAssortChanged(String s) {
                 super.onTouchAssortChanged(s);
-              int position=mAdapter.getPositionForSection(s.charAt(0));
+                int position = mAdapter.getPositionForSection(s.charAt(0));
                 recyclerView.getLayoutManager().scrollToPosition(position);
 
             }
@@ -102,13 +107,13 @@ public class FriendsFragment extends BaseFragment   {
                     }
                 }
             }
+
             @Override
             public void onScrolled(RecyclerView recyclerView, int dx, int dy) {
                 super.onScrolled(recyclerView, dx, dy);
             }
         });
     }
-
 
    private void initData(){
        List<ContactPersonPojo> personPojoList= ContactsPersonDao.getContactsPersonList(context);
@@ -117,6 +122,36 @@ public class FriendsFragment extends BaseFragment   {
        mAdapter.notifyDataSetChanged();
    }
 
+    @Event(value = R.id.swipeRefreshLayout,type= SwipeRefreshLayout.OnRefreshListener.class)
+    private void onRefreshDataEvent() {
+        hideSwipeRefreshIcon();
+    }
+
+    /**
+     * 显示刷新按钮
+     */
+    public void showSwipeRefreshIcon(){
+        //显示加载图标
+        swipeRefreshLayout.post(new Runnable() {
+            @Override
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
+            }
+        });
+    }
+
+    /**
+     * 隐藏刷新按钮
+     */
+    public void hideSwipeRefreshIcon(){
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //关闭加载图标
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
+    }
 
 
 

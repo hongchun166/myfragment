@@ -5,7 +5,7 @@ import android.view.View;
 
 /**
  * Created by TianHongChun on 2016/4/12.
- * 分组顶部停留
+ * 分组 顶部悬浮接口
  */
 public interface PinnedHeaderAdapter {
 

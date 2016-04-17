@@ -4,6 +4,7 @@ import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -17,6 +18,7 @@ import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
 
 import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 /**
@@ -31,9 +33,8 @@ public class MessageFragment extends BaseFragment {
     @ViewInject(R.id.listView)
     ListView  listView;
 
-    @ViewInject(R.id.textView_group)
-    TextView textViewGroup;
-
+    @ViewInject(R.id.swipeRefreshLayout)
+    SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -45,39 +46,53 @@ public class MessageFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        LogUtil.d("MessageFragment=onCreateView==");
     }
 
 
     @Override
     public void initView(View view, @Nullable Bundle savedInstanceState) {
-            View view1=LayoutInflater.from(context).inflate(R.layout.contact_person_group_layout,null);
-            View view2=LayoutInflater.from(context).inflate(R.layout.contact_person_group_layout,null);
-            listView.addHeaderView(view1);
-            listView.addHeaderView(view2);
     }
 
     @Override
     public void initEven(View view, @Nullable Bundle savedInstanceState) {
         LogUtil.d("initEven=onCreateView==");
-        String[]   strs= new String[20];
-        for (int i = 0; i < 20; i++) {
+        String[]   strs= new String[30];
+        for (int i = 0; i < 30; i++) {
             strs[i] = "data-----" + i;
         }
         listView.setAdapter(new ArrayAdapter<String>(context, android.R.layout.simple_list_item_1, strs));
-        listView.setOnScrollListener(new AbsListView.OnScrollListener() {
-            @Override
-            public void onScrollStateChanged(AbsListView view, int scrollState) {
-            }
 
+    }
+
+    @Event(value = R.id.swipeRefreshLayout,type= SwipeRefreshLayout.OnRefreshListener.class)
+    private void onRefreshDataEvent() {
+        hideSwipeRefreshIcon();
+    }
+
+    /**
+     * 显示刷新按钮
+     */
+    public void showSwipeRefreshIcon(){
+        //显示加载图标
+        swipeRefreshLayout.post(new Runnable() {
             @Override
-            public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
-                if (firstVisibleItem <1) {
-                    textViewGroup.setVisibility(View.GONE);
-                }else {
-                    textViewGroup.setVisibility(View.VISIBLE);
-                }
+            public void run() {
+                swipeRefreshLayout.setRefreshing(true);
             }
         });
     }
+
+    /**
+     * 隐藏刷新按钮
+     */
+    public void hideSwipeRefreshIcon(){
+        swipeRefreshLayout.postDelayed(new Runnable() {
+            @Override
+            public void run() {
+                //关闭加载图标
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        }, 1000);
+    }
+
 }

@@ -12,9 +12,11 @@ import android.widget.Toast;
 
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
+import com.example.hongchun.myapplication.ui.view.PullRefreshView;
 
 import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ContentView;
+import org.xutils.view.annotation.ViewInject;
 
 /**
  * Created by TianHongChun on 2016/4/5.
@@ -22,6 +24,9 @@ import org.xutils.view.annotation.ContentView;
 @ContentView(R.layout.fragment_call_layout)
 public class CallFragment extends BaseFragment {
 
+
+    @ViewInject(R.id.pullview_textView)
+    PullRefreshView pullRefreshView;
 
     Context context;
 
@@ -38,7 +43,6 @@ public class CallFragment extends BaseFragment {
 
     @Override
     public void initEven(View view, @Nullable Bundle savedInstanceState) {
-
     }
 
     @Override

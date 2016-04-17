@@ -17,6 +17,7 @@ import com.example.hongchun.myapplication.ui.adapter.ContactPersonListViewAdapte
 
 /**
  * Created by TianHongChun on 2016/4/12.
+ * 分组 顶部悬浮view
  */
 public class PinnedHeaderListView extends ListView implements AbsListView.OnScrollListener {
     Context context;
