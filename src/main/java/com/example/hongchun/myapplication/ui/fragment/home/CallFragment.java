@@ -2,21 +2,18 @@ package com.example.hongchun.myapplication.ui.fragment.home;
 
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.util.Log;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Toast;
 
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
 import com.example.hongchun.myapplication.ui.view.PullRefreshLayout;
-import com.example.hongchun.myapplication.ui.view.PullRefreshView;
+import com.example.hongchun.myapplication.ui.view.index.PullRefreshListView;
+import com.example.hongchun.myapplication.ui.view.index.PullRefreshTextView;
 
-import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
 
@@ -27,8 +24,8 @@ import org.xutils.view.annotation.ViewInject;
 public class CallFragment extends BaseFragment {
 
 
-    @ViewInject(R.id.pullview_textView)
-    PullRefreshView pullRefreshView;
+    @ViewInject(R.id.pullrefreshListView)
+    PullRefreshListView pullRefreshListView;
 
     @ViewInject(R.id.pullRefreshLayout)
     PullRefreshLayout pullRefreshLayout;
@@ -44,19 +41,15 @@ public class CallFragment extends BaseFragment {
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        pullRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                pullRefreshLayout.setRefresh(true);
-            }
-        });
+
     }
 
     @Override
     public void initEven(View view, @Nullable Bundle savedInstanceState) {
+
         pullRefreshLayout.setOnPullToRefreshListener(new PullRefreshLayout.OnPullToRefreshListener() {
             @Override
-            public void onRefreshDown() {
+            public void onRefreshDown(PullRefreshLayout pullRefreshLayout1) {
                 pullRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -67,7 +60,7 @@ public class CallFragment extends BaseFragment {
             }
 
             @Override
-            public void onRefreshUp() {
+            public void onRefreshUp(PullRefreshLayout pullRefreshLayout1) {
                 pullRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
@@ -76,10 +69,32 @@ public class CallFragment extends BaseFragment {
                 },2000);
             }
         });
+
+        pullRefreshListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(context,"=======onItemClick=====",Toast.LENGTH_SHORT).show();
+            }
+        });
+        pullRefreshListView.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, int position, long id) {
+                Toast.makeText(context,"======onItemLongClick===",Toast.LENGTH_SHORT).show();
+                return true;
+            }
+        });
     }
 
     @Override
     public void initView(View view, @Nullable Bundle savedInstanceState) {
-
+        String[] strings=new String[30];
+        for (int i=0;i<30;i++){
+            strings[i]="xiao "+i;
+        }
+        ArrayAdapter<String> adapter=new ArrayAdapter<String>(context,android.R.layout.simple_list_item_1,strings);
+        pullRefreshListView.setAdapter(adapter);
     }
+
+
+
 }

@@ -1,4 +1,4 @@
-package com.example.hongchun.myapplication.ui.view;
+package com.example.hongchun.myapplication.ui.view.index;
 
 import android.content.Context;
 import android.util.AttributeSet;
@@ -11,15 +11,15 @@ import com.example.hongchun.myapplication.interfacem.Pullable;
 /**
  * Created by TianHongChun on 2016/4/16.
  */
-public class PullRefreshView extends TextView implements Pullable {
-    public PullRefreshView(Context context) {
+public class PullRefreshTextView extends TextView implements Pullable {
+    public PullRefreshTextView(Context context) {
         super(context);
     }
-    public PullRefreshView(Context context, AttributeSet attrs) {
+    public PullRefreshTextView(Context context, AttributeSet attrs) {
         super(context, attrs);
     }
 
-    public PullRefreshView(Context context, AttributeSet attrs, int defStyleAttr) {
+    public PullRefreshTextView(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
     }
 

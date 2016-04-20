@@ -8,15 +8,14 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
-        <com.example.hongchun.myapplication.ui.view.PullRefreshView
-            android:id="@+id/pullview_textView"
+        <com.example.hongchun.myapplication.ui.view.index.PullRefreshListView
+            android:id="@+id/pullrefreshListView"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
-            android:text="刷新控件"
-            android:textColor="@android:color/black"
-            android:textSize="@dimen/dimen_textsize_large_xxl"
-            android:background="#5000ff00"
-            android:gravity="center"
-            />
+            android:divider="@color/colorLine"
+            android:dividerHeight="1px"
+            android:background="@android:color/white"
+            >
+        </com.example.hongchun.myapplication.ui.view.index.PullRefreshListView>
     </com.example.hongchun.myapplication.ui.view.PullRefreshLayout>
 </RelativeLayout>
