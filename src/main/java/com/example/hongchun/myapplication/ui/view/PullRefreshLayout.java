@@ -1,6 +1,7 @@
 package com.example.hongchun.myapplication.ui.view;
 
 import android.content.Context;
+import android.graphics.Bitmap;
 import android.graphics.Color;
 import android.os.AsyncTask;
 import android.os.Handler;
@@ -11,7 +12,13 @@ import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewConfiguration;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
+import android.view.animation.LinearInterpolator;
+import android.view.animation.RotateAnimation;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -50,48 +57,53 @@ public class PullRefreshLayout extends RelativeLayout {
     // 操作完毕
     public static final int STATUS_DONE = 5;
 
-    /**下拉头部回滚的速度*/
-    public static final int SCROLL_SPEED = -20;
 
-    public int currentStatus= STATUS_INIT;
+
+    public int currentStatus= STATUS_INIT;//当前状态
+    public int lastStatus= STATUS_INIT;//最后一次状态
 
     // 释放刷新的距离
     private float refreshDist = 200;
     private float loadDist = 200;
     private  boolean isLayout=false;// 是否初始化view
+    /**下拉头部回滚的速度*/
+    private  final   int SCROLL_SPEED = -20;
+   private  int measuredHeightLayout=0;   // pullrefreshLayout高度
 
     View headView;      // 刷新头
-    TextView headTextView;//刷新头子view
-
     View loadView;      // 加载头
-    TextView loadTextView;//加载头子view
-
-
     View pullableView;// 内容View
+
+    TextView loadTextView;//加载头子view
+    TextView headTextView;//刷新头子view
+    ImageView loadArrow;
+    ImageView headArrow;
+    ProgressBar loadProgressBar;
+    ProgressBar headProgressBar;
 
     OnPullToRefreshListener onPullToRefreshListener;
 
     public void init(Context context){
         this.context=context;
-        headView= LayoutInflater.from(context).inflate(R.layout.contact_person_group_layout,null);
+        headView= LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_layout,null);
         LayoutParams layoutParams= new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         headView.setLayoutParams(layoutParams);
-        headTextView=(TextView)headView.findViewById(R.id.textView_group);
+
         addView(headView);
 
-        loadView= LayoutInflater.from(context).inflate(R.layout.contact_person_group_layout,null);
+        loadView= LayoutInflater.from(context).inflate(R.layout.pull_to_refresh_layout,null);
         LayoutParams layoutParams22= new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         loadView.setLayoutParams(layoutParams22);
-        loadTextView=(TextView)loadView.findViewById(R.id.textView_group);
         addView(loadView);
 
-
+        initView();
     }
 
     @Override
     protected void onMeasure(int widthMeasureSpec, int heightMeasureSpec) {
         super.onMeasure(widthMeasureSpec, heightMeasureSpec);
         measureChild(headView, widthMeasureSpec, heightMeasureSpec);
+        measuredHeightLayout=getMeasuredHeight();
     }
 
     @Override
@@ -101,14 +113,13 @@ public class PullRefreshLayout extends RelativeLayout {
             pullableView=getChildAt(2);//内容控件
             refreshDist=headView.getMeasuredHeight();
             loadDist=loadView.getMeasuredHeight();
+
             pullDownY=0;
             pullUpY=0;
             isLayout=true;
         }
-
 //        pullableView.layout(0,(int)pullDownY,pullableView.getMeasuredWidth(),(int)(pullDownY+pullableView.getMeasuredHeight()));
 //        headView.layout(0, (int)(pullDownY-headView.getMeasuredHeight()), headView.getMeasuredWidth(), (int)pullDownY);
-
         headView.layout(0,
                 (int) (pullDownY + pullUpY) - headView.getMeasuredHeight(),
                 headView.getMeasuredWidth(), (int) (pullDownY + pullUpY));
@@ -124,6 +135,7 @@ public class PullRefreshLayout extends RelativeLayout {
     }
 
     float radio=2;        // 距离计算比例
+    float yDown=0;
     float lastY=0;
     float pullDownY=0;      //下拉距离
     float pullUpY=0;      //下拉距离
@@ -134,16 +146,16 @@ public class PullRefreshLayout extends RelativeLayout {
     public boolean dispatchTouchEvent(MotionEvent ev) {
         switch (ev.getAction()){
             case MotionEvent.ACTION_DOWN:
-               float yDown=ev.getY();
+                yDown=ev.getY();
                 lastY=yDown;
                 releasePull();
                 break;
             case MotionEvent.ACTION_MOVE:
                 // 判断是上啦还是下拉,计算移动距离pullDownY 和pullUpY
-                if(ev.getY()-lastY>10){
+                if(ev.getY()-yDown>10){
                     // 下拉
                     mTouchEventDown(ev);
-                }else if(ev.getY()-lastY<10){
+                }else if(ev.getY()-yDown<10){
                     //上啦
                     mTouchEventUp(ev);
                 }
@@ -191,18 +203,15 @@ public class PullRefreshLayout extends RelativeLayout {
                 if(currentStatus==STATUS_INIT){
                     // 下拉状态,那么隐藏下拉头
                     new HideHeaderTask().execute();
-                    changeState(STATUS_INIT);
                 }else if(currentStatus==STATUS_RELEASE_TO_REFRESH){
                     // 释放立即刷新状态,
                     new RefreshingTask().execute();
-                    changeState(STATUS_REFRESHING);
                     // 回调刷新方法
                     if(onPullToRefreshListener!=null){
                         onPullToRefreshListener.onRefreshDown();
                     }
                 }else if (currentStatus==STATUS_RELEASE_TO_LOAD){
                         new LoadingTask().execute();
-                    changeState(STATUS_LOADING);
                     // 回调刷新方法
                     if(onPullToRefreshListener!=null){
                         onPullToRefreshListener.onRefreshUp();
@@ -240,46 +249,92 @@ public class PullRefreshLayout extends RelativeLayout {
         }
     }
 
-    private void setChangeState(int to){
-        currentStatus=to;
+    Animation animationRotate;
+    Animation animationRotateLeft;
+    Animation animationRotateRight;
+    private void initView(){
+            headTextView=(TextView)headView.findViewById(R.id.description);
+        headArrow=(ImageView)headView.findViewById(R.id.arrow);
+        headProgressBar=(ProgressBar)headView.findViewById(R.id.progress_bar);
+
+        loadTextView=(TextView)loadView.findViewById(R.id.description);
+        loadArrow=(ImageView)loadView.findViewById(R.id.arrow);
+        loadProgressBar=(ProgressBar)loadView.findViewById(R.id.progress_bar);
+
+        changeState(STATUS_INIT);
+
+        animationRotate=AnimationUtils.loadAnimation(context,R.anim.rotate);
+        animationRotateLeft=AnimationUtils.loadAnimation(context,R.anim.rotate_left_anim);
+        animationRotateRight=AnimationUtils.loadAnimation(context,R.anim.rotate_right_anim);
+        animationRotateLeft.setFillAfter(true);
+        animationRotateRight.setFillAfter(true);
+        // 添加匀速转动动画
+        LinearInterpolator lir = new LinearInterpolator();
+        animationRotate.setInterpolator(lir);
+        animationRotateLeft.setInterpolator(lir);
+        animationRotateRight.setInterpolator(lir);
     }
     private void changeState(int to){
         currentStatus=to;
+        if(lastStatus!=currentStatus){
             switch (to){
                 case STATUS_INIT:
                     headTextView.setText("下拉刷新");
-                    loadTextView.setText("上啦记载");
+                    loadTextView.setText("上拉加载");
+                    headProgressBar.setVisibility(GONE);
+                    loadProgressBar.setVisibility(GONE);
+                    headArrow.setVisibility(VISIBLE);
+                    loadArrow.setVisibility(VISIBLE);
+                    headArrow.startAnimation(animationRotateRight);
+                    loadArrow.startAnimation(animationRotateLeft);
                     break;
                 case STATUS_REFRESHING:
+                    headArrow.clearAnimation();
                     headTextView.setText("正在刷新");
+                    headArrow.setVisibility(GONE);
+                    headProgressBar.setVisibility(VISIBLE);
                     break;
                 case STATUS_RELEASE_TO_REFRESH:
                     headTextView.setText("释放立即刷新");
+                    headArrow.startAnimation(animationRotateLeft);
                     break;
                 case STATUS_LOADING:
+                    loadArrow.clearAnimation();
                     loadTextView.setText("正在加载");
+                    loadArrow.setVisibility(GONE);
+                    loadProgressBar.setVisibility(VISIBLE);
                     break;
                 case STATUS_RELEASE_TO_LOAD:
                     loadTextView.setText("松开加载更多");
+                    loadArrow.startAnimation(animationRotateRight);
                     break;
                 case STATUS_DONE:
                     break;
             }
+        }
+        lastStatus=currentStatus;
     }
-
     public void setRefresh(boolean isRefresh){
             if(isRefresh){
                 new RefreshingTask().execute();
-                changeState(STATUS_REFRESHING);
                 // 回调刷新方法
                 if(onPullToRefreshListener!=null){
                     onPullToRefreshListener.onRefreshDown();
                 }
             }else {
                 new HideHeaderTask().execute();
-                changeState(STATUS_INIT);
-
             }
+    }
+    public void setRefreshLoad(boolean isRefreshLoad){
+        if(isRefreshLoad){
+            new RefreshingTask().execute();
+            // 回调刷新方法
+            if(onPullToRefreshListener!=null){
+                onPullToRefreshListener.onRefreshUp();
+            }
+        }else {
+            new HideHeaderTask().execute();
+        }
     }
     public void setOnPullToRefreshListener(OnPullToRefreshListener onPullToRefreshListener){
             this.onPullToRefreshListener=onPullToRefreshListener;
@@ -287,8 +342,7 @@ public class PullRefreshLayout extends RelativeLayout {
     /**
      * 不限制上拉或下拉
      */
-    private void releasePull()
-    {
+    private void releasePull(){
         canPullDown = true;
         canPullUp = true;
     }
@@ -323,6 +377,11 @@ public class PullRefreshLayout extends RelativeLayout {
         protected void onProgressUpdate(Integer... topMargin) {
             requestLayout();
         }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            changeState(STATUS_REFRESHING);
+        }
     }
 
     /**
@@ -337,10 +396,20 @@ public class PullRefreshLayout extends RelativeLayout {
 
             // 回弹速度随下拉距离moveDeltaY增大而增大
             while (true) {
-                pullDownY = pullDownY + SCROLL_SPEED;
-                if (pullDownY <=0 ) {
-                    pullDownY =0;
-                    break;
+                if(pullDownY>0){
+                    pullDownY +=SCROLL_SPEED;
+                }else if(pullUpY<0){
+                    pullUpY-=SCROLL_SPEED;
+                }
+                if(pullDownY<=0){
+                    pullDownY = 0;
+                }
+                if(pullUpY>=0){
+                    pullUpY=0;
+
+                }
+                if(pullUpY==0 && pullDownY==0){
+                        break;
                 }
                 publishProgress(1);
                 try {
@@ -349,13 +418,18 @@ public class PullRefreshLayout extends RelativeLayout {
                     e.printStackTrace();
                 }
             }
-            publishProgress(0);
+            publishProgress(1);
             return 1;
         }
 
         @Override
         protected void onProgressUpdate(Integer... topMargin) {
             requestLayout();
+        }
+
+        @Override
+        protected void onPostExecute(Integer integer) {
+            changeState(STATUS_INIT);
         }
     }
 
@@ -388,6 +462,11 @@ public class PullRefreshLayout extends RelativeLayout {
         @Override
         protected void onProgressUpdate(Integer... topMargin) {
             requestLayout();
+        }
+
+        @Override
+        protected void onPostExecute(Void aVoid) {
+            changeState(STATUS_LOADING);
         }
     }
     public interface OnPullToRefreshListener{

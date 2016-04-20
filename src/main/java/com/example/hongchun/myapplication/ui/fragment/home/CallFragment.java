@@ -68,7 +68,12 @@ public class CallFragment extends BaseFragment {
 
             @Override
             public void onRefreshUp() {
-
+                pullRefreshLayout.postDelayed(new Runnable() {
+                    @Override
+                    public void run() {
+                        pullRefreshLayout.setRefreshLoad(false);
+                    }
+                },2000);
             }
         });
     }
