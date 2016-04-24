@@ -18,33 +18,45 @@ import java.util.List;
 /**
  * Created by TianHongChun on 2016/4/12.
  */
-public class ContactsPersonDao  {
+public class ContactsPersonDao  extends BaseDao {
+
+    private static ContactsPersonDao dao;
+
+    private ContactsPersonDao(){
+
+    }
+    public static synchronized ContactsPersonDao getInstant(){
+        if(dao==null){
+            dao=new ContactsPersonDao();
+        }
+        return dao;
+    }
 
     /**得到手机通讯录联系人信息**/
-    public static List getContactsPersonList(Context context){
+    public  List getContactsPersonList(Context context){
         Cursor cursor=context.getContentResolver().query(ContactsContract.CommonDataKinds.Phone.CONTENT_URI,null,null,null,null);
         List<ContactPersonPojo> personPojoList=new ArrayList<>();
         while (cursor.moveToNext()){
-            String contactId=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
+            int contactId = cursor.getInt(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.CONTACT_ID));
             String contactName=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.DISPLAY_NAME));
             String contactPhone=cursor.getString(cursor.getColumnIndex(ContactsContract.CommonDataKinds.Phone.NUMBER));
             ContactPersonPojo contactPersonPojo=new ContactPersonPojo();
             contactPersonPojo.setId(contactId);
-            contactPersonPojo.setPersonName(contactName);
-            contactPersonPojo.setPersonPhone(contactPhone);
+            contactPersonPojo.setName(contactName);
+            contactPersonPojo.setPhone(contactPhone);
             personPojoList.add(contactPersonPojo);
         }
         cursor.close();
         return personPojoList;
     }
-    public static int deleteContactsPerson(Context context,String contactId){
+    public  int deleteContactsPerson(Context context,String contactId){
       int rowCount=context.getContentResolver().delete(
                     ContactsContract.CommonDataKinds.Phone.CONTENT_URI
                     ,ContactsContract.CommonDataKinds.Phone.CONTACT_ID+"=?"
                     ,new String[]{contactId});
         return rowCount;
     }
-    public static int updataContactsPerson(Context context,String contactId,ContentValues contentValues){
+    public  int updataContactsPerson(Context context,String contactId,ContentValues contentValues){
         int rowCount= context.getContentResolver().update(
                 ContactsContract.CommonDataKinds.Phone.CONTENT_URI
                 ,contentValues

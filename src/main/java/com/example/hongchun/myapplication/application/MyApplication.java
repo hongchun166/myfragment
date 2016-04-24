@@ -17,16 +17,13 @@ import java.util.List;
 public class MyApplication extends Application {
 
     private static MyApplication application;
-    private DbManager.DaoConfig daoConfig;
     private List<Activity> mList = new LinkedList<>();
 
     public static MyApplication getApplication(){
         return application;
     }
 
-    public DbManager.DaoConfig getDaoConfig() {
-        return daoConfig;
-    }
+
 
     @Override
     public void onCreate() {
@@ -35,16 +32,6 @@ public class MyApplication extends Application {
         x.Ext.init(this);
         x.Ext.setDebug(true);
         SDKInitializer.initialize(this);
-        //初始化数据库
-        daoConfig=new DbManager.DaoConfig()
-                .setDbName("myfragment_db")
-                .setDbVersion(1)
-                .setDbUpgradeListener(new DbManager.DbUpgradeListener() {
-                    @Override
-                    public void onUpgrade(DbManager db, int oldVersion, int newVersion) {
-
-                    }
-                });
     }
 
 

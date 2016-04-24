@@ -53,7 +53,7 @@ public class ContactListDialog extends BaseDialogFragment {
                     @Override
                     public void onClick(View v) {
                         LoadDiaog.getInstance()
-                                .setTitleName("删除:" + getContactPersonPojo().getPersonName())
+                                .setTitleName("删除:" + getContactPersonPojo().getName())
                                 .show(getFragmentManager());
                         dismiss();
                     }

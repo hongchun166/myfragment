@@ -13,19 +13,8 @@ public class CollectionsUtil {
     private CollectionsUtil(){
     }
 
+
     public static   void sortContactPerson(List<ContactPersonPojo> list){
-        if(list.size()>1){
-            Collections.sort(list, new Comparator<ContactPersonPojo>() {
-                @Override
-                public int compare(ContactPersonPojo lhs, ContactPersonPojo rhs) {
-                    String lhsName=MStringUtils.getPingYin(lhs.getPersonName());
-                    String rhsName=MStringUtils.getPingYin(rhs.getPersonName());
-                    return lhsName.compareToIgnoreCase(rhsName);
-                }
-            });
-        }
-    }
-    public static   void sortContactPersonTest(List<ContactPersonPojo> list){
         if(list.size()>1){
             Collections.sort(list, new Comparator<ContactPersonPojo>() {
                 @Override

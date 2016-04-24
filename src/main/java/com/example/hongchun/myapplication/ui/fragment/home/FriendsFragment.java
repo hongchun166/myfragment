@@ -53,8 +53,6 @@ public class FriendsFragment extends BaseFragment   {
     @ViewInject(R.id.recyclerView)
     RecyclerView recyclerView;
 
-    @ViewInject(R.id.swipeRefreshLayout)
-    SwipeRefreshLayout swipeRefreshLayout;
 
     ContactPersonRecyclerAdapter mAdapter;
     List<ContactPersonPojo> contactPersonPojoList;
@@ -116,90 +114,56 @@ public class FriendsFragment extends BaseFragment   {
     }
 
    private void initData(){
-       List<ContactPersonPojo> personPojoList= ContactsPersonDao.getContactsPersonList(context);
-       contactPersonPojoList.clear();
-       contactPersonPojoList.addAll(personPojoList);
-       mAdapter.notifyDataSetChanged();
+
    }
 
-    @Event(value = R.id.swipeRefreshLayout,type= SwipeRefreshLayout.OnRefreshListener.class)
-    private void onRefreshDataEvent() {
-        hideSwipeRefreshIcon();
-    }
-
-    /**
-     * 显示刷新按钮
-     */
-    public void showSwipeRefreshIcon(){
-        //显示加载图标
-        swipeRefreshLayout.post(new Runnable() {
-            @Override
-            public void run() {
-                swipeRefreshLayout.setRefreshing(true);
-            }
-        });
-    }
-
-    /**
-     * 隐藏刷新按钮
-     */
-    public void hideSwipeRefreshIcon(){
-        swipeRefreshLayout.postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                //关闭加载图标
-                swipeRefreshLayout.setRefreshing(false);
-            }
-        }, 1000);
-    }
 
 
 
 
     private List<ContactPersonPojo> getTestData(){
         List<ContactPersonPojo> list=new ArrayList<>();
-
-        ContactPersonPojo personPojo1=new ContactPersonPojo("1","张晓明","123412311","");
+        ContactPersonPojo personPojo1=new ContactPersonPojo(1,"张三","123412311","");
         list.add(personPojo1);
-        ContactPersonPojo personPojo2=new ContactPersonPojo("1","张三","123412312","");
+        ContactPersonPojo personPojo2=new ContactPersonPojo(2,"张四","123412312","");
         list.add(personPojo2);
-        ContactPersonPojo personPojo3=new ContactPersonPojo("1","李四","1234123","");
+        ContactPersonPojo personPojo3=new ContactPersonPojo(3,"李武","1234123","");
         list.add(personPojo3);
-        ContactPersonPojo personPojo4=new ContactPersonPojo("1","王五","1234123","");
+        ContactPersonPojo personPojo4=new ContactPersonPojo(4,"李六","1234123","");
         list.add(personPojo4);
-        ContactPersonPojo personPojo5=new ContactPersonPojo("1","张大胆","1234123","");
+        ContactPersonPojo personPojo5=new ContactPersonPojo(5,"王二","1234123","");
         list.add(personPojo5);
-        ContactPersonPojo personPojo6=new ContactPersonPojo("1","王二","1234123","");
+        ContactPersonPojo personPojo6=new ContactPersonPojo(6,"王二","1234123","");
         list.add(personPojo6);
-        ContactPersonPojo personPojo7=new ContactPersonPojo("1","妮娜","1234123","");
+        ContactPersonPojo personPojo7=new ContactPersonPojo(7,"王一","1234123","");
         list.add(personPojo7);
-        ContactPersonPojo personPojo8=new ContactPersonPojo("1","刘立","1234123","");
+        ContactPersonPojo personPojo8=new ContactPersonPojo(8,"刘柳","1234123","");
         list.add(personPojo8);
-        ContactPersonPojo personPojo9=new ContactPersonPojo("1","刘建","1234123","");
+        ContactPersonPojo personPojo9=new ContactPersonPojo(9,"刘建","1234123","");
         list.add(personPojo9);
-        ContactPersonPojo personPojo10=new ContactPersonPojo("1","黄明","1234123","");
+        ContactPersonPojo personPojo10=new ContactPersonPojo(10,"黄明","1234123","");
         list.add(personPojo10);
-        ContactPersonPojo personPojo11=new ContactPersonPojo("1","黄剑","1234123","");
+        ContactPersonPojo personPojo11=new ContactPersonPojo(11,"黄剑","1234123","");
         list.add(personPojo11);
-        ContactPersonPojo personPojo12=new ContactPersonPojo("1","黄散","1234123","");
+        ContactPersonPojo personPojo12=new ContactPersonPojo(12,"安琪","1234123","");
         list.add(personPojo12);
-        ContactPersonPojo personPojo13=new ContactPersonPojo("1","王1","1234123","");
+        ContactPersonPojo personPojo13=new ContactPersonPojo(13,"安吉","1234123","");
         list.add(personPojo13);
-        ContactPersonPojo personPojo14=new ContactPersonPojo("1","王12","1234123","");
+        ContactPersonPojo personPojo14=new ContactPersonPojo(14,"古河","1234123","");
         list.add(personPojo14);
-        ContactPersonPojo personPojo15=new ContactPersonPojo("1","张晓明1","1234123","");
+        ContactPersonPojo personPojo15=new ContactPersonPojo(15,"股海","1234123","");
         list.add(personPojo15);
-        ContactPersonPojo personPojo16=new ContactPersonPojo("1","张晓明2","1234123","");
+        ContactPersonPojo personPojo16=new ContactPersonPojo(16,"龙龙","1234123","");
         list.add(personPojo16);
-        ContactPersonPojo personPojo17=new ContactPersonPojo("1","阿萨","1234123","");
+        ContactPersonPojo personPojo17=new ContactPersonPojo(17,"龙阿尼","1234123","");
         list.add(personPojo17);
-        ContactPersonPojo personPojo18=new ContactPersonPojo("1","古喝","1234123","");
+        ContactPersonPojo personPojo18=new ContactPersonPojo(18,"汪峰","1234123","");
         list.add(personPojo18);
-        ContactPersonPojo personPojo19=new ContactPersonPojo("1","喝彩","1234123","");
+        ContactPersonPojo personPojo19=new ContactPersonPojo(19,"汪武","1234123","");
         list.add(personPojo19);
-        ContactPersonPojo personPojo20=new ContactPersonPojo("1","高达","1234123","");
+        ContactPersonPojo personPojo20=new ContactPersonPojo(20,"高斯","1234123","");
         list.add(personPojo20);
-        ContactPersonPojo personPojo21=new ContactPersonPojo("1","飒斯","1234123","");
+        ContactPersonPojo personPojo21=new ContactPersonPojo(21,"高米","1234123","");
         list.add(personPojo21);
 
         CollectionsUtil.sortContactPerson(list);

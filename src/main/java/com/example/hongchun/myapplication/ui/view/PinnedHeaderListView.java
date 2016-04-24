@@ -13,13 +13,14 @@ import android.widget.ListView;
 
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.interfacem.PinnedHeaderAdapter;
+import com.example.hongchun.myapplication.interfacem.Pullable;
 import com.example.hongchun.myapplication.ui.adapter.ContactPersonListViewAdapter;
 
 /**
  * Created by TianHongChun on 2016/4/12.
  * 分组 顶部悬浮view
  */
-public class PinnedHeaderListView extends ListView implements AbsListView.OnScrollListener {
+public class PinnedHeaderListView extends ListView implements AbsListView.OnScrollListener,Pullable {
     Context context;
 
 
@@ -164,5 +165,42 @@ public class PinnedHeaderListView extends ListView implements AbsListView.OnScro
         }else {
             this.onScrollListener=l;
         }
+    }
+
+
+    @Override
+    public boolean canPullDown() {
+
+        if (getCount() == 0)
+        {
+            // 没有item的时候也可以下拉刷新
+            return true;
+        } else if (getFirstVisiblePosition() == 0
+                && getChildAt(0).getTop() >= 0)
+        {
+            // 滑到ListView的顶部了
+            return true;
+        } else
+            return false;
+    }
+
+
+    @Override
+    public boolean canPullUp() {
+        if (getCount() == 0)
+        {
+            // 没有item的时候也可以上拉加载
+            return true;
+        } else if (getLastVisiblePosition() == (getCount() - 1))
+        {
+            // 滑到底部了
+            if (getChildAt(getLastVisiblePosition() - getFirstVisiblePosition()) != null
+                    && getChildAt(
+                    getLastVisiblePosition()
+                            - getFirstVisiblePosition()).getBottom() <= getMeasuredHeight())
+                return true;
+        }
+        return false;
+
     }
 }

@@ -1,5 +1,6 @@
 package com.example.hongchun.myapplication.ui.dialog;
 
+import android.app.DialogFragment;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.FragmentManager;
@@ -37,8 +38,15 @@ public class LoadDiaog extends BaseDialogFragment {
     }
 
     @Override
+    public void onCreate(@Nullable Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+    }
+
+    @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+
+        getDialog().setCanceledOnTouchOutside(false);
         textView.setText(titleName);
     }
 

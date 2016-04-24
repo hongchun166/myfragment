@@ -79,9 +79,11 @@
         android:supportsRtl="true"
 
         android:theme="@style/AppTheme">
+        <!--dug vTY0GE8LyNGAGDRQAGqXA2TqgV1vIDjH -->
+        <!-- BL3XlsfcwWf3Owp3NCD7uIaCwIeT1wZQ -->
         <meta-data
             android:name="com.baidu.lbsapi.API_KEY"
-            android:value="w5Xev7g8WfSpEk6E0lfjfgOoktmmUNFG" />
+            android:value="vTY0GE8LyNGAGDRQAGqXA2TqgV1vIDjH" />
 
         <activity
             android:name=".ui.activity.StartActivity"

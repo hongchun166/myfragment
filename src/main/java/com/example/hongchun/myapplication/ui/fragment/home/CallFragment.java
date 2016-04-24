@@ -10,7 +10,7 @@ import android.widget.Toast;
 
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
-import com.example.hongchun.myapplication.ui.view.PullRefreshLayout;
+import com.example.hongchun.myapplication.ui.view.PullRefreshLayout2;
 import com.example.hongchun.myapplication.ui.view.index.PullRefreshListView;
 import com.example.hongchun.myapplication.ui.view.index.PullRefreshTextView;
 
@@ -28,7 +28,7 @@ public class CallFragment extends BaseFragment {
     PullRefreshListView pullRefreshListView;
 
     @ViewInject(R.id.pullRefreshLayout)
-    PullRefreshLayout pullRefreshLayout;
+    PullRefreshLayout2 pullRefreshLayout;
 
     Context context;
 
@@ -47,26 +47,26 @@ public class CallFragment extends BaseFragment {
     @Override
     public void initEven(View view, @Nullable Bundle savedInstanceState) {
 
-        pullRefreshLayout.setOnPullToRefreshListener(new PullRefreshLayout.OnPullToRefreshListener() {
+        pullRefreshLayout.setOnPullToRefreshListener(new PullRefreshLayout2.OnPullToRefreshListener() {
             @Override
-            public void onRefreshDown(PullRefreshLayout pullRefreshLayout1) {
+            public void onRefreshDown(PullRefreshLayout2 pullRefreshLayout1) {
                 pullRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         pullRefreshLayout.setRefresh(false);
                     }
-                },2000);
+                },10000);
 
             }
 
             @Override
-            public void onRefreshUp(PullRefreshLayout pullRefreshLayout1) {
+            public void onRefreshUp(PullRefreshLayout2 pullRefreshLayout1) {
                 pullRefreshLayout.postDelayed(new Runnable() {
                     @Override
                     public void run() {
                         pullRefreshLayout.setRefreshLoad(false);
                     }
-                },2000);
+                },5000);
             }
         });
 

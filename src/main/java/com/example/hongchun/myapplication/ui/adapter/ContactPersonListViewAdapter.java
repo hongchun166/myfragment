@@ -68,8 +68,8 @@ public class ContactPersonListViewAdapter extends BaseAdapter implements PinnedH
         }
         if(contactPersonPojo!=null){
             itemViewHolder.setContactPersonPojo(contactPersonPojo);
-            itemViewHolder.getTextViewPersonName().setText(contactPersonPojo.getPersonName());
-            itemViewHolder.getTextViewPersonPhone().setText(contactPersonPojo.getPersonPhone());
+            itemViewHolder.getTextViewPersonName().setText(contactPersonPojo.getName());
+            itemViewHolder.getTextViewPersonPhone().setText(contactPersonPojo.getPhone());
             x.image().bind(itemViewHolder.getImageViewPersonHead(), "assets://avatar.jpg", ImagerUtils.getCircularImageOptions());
             //根据position获取分类的首字母的char ascii值
             String firstLetter=contactPersonPojo.getSortLetter();
@@ -109,7 +109,11 @@ public class ContactPersonListViewAdapter extends BaseAdapter implements PinnedH
             return PINNED_HEADER_GONE;
         }
         ContactPersonPojo item = (ContactPersonPojo) getItem(position);
-        ContactPersonPojo itemNext = (ContactPersonPojo) getItem(position + 1);
+        Object object=getItem(position + 1);
+        ContactPersonPojo itemNext=null;
+        if(object!=0){
+            itemNext=(ContactPersonPojo)object;
+        }
         boolean isNextSection =false;
         boolean isSection=false;
         if(null!=itemNext){
@@ -171,10 +175,10 @@ public class ContactPersonListViewAdapter extends BaseAdapter implements PinnedH
         private void onEvenOnClick(View view){
             switch (view.getId()){
                 case R.id.itemRootView:
-                    Toast.makeText(context,"点击了item:"+getContactPersonPojo().getPersonName(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"点击了item:"+getContactPersonPojo().getName(),Toast.LENGTH_SHORT).show();
                     break;
                 case R.id.imageView_personHead:
-                    Toast.makeText(context,"点击了头像:"+getContactPersonPojo().getPersonName(),Toast.LENGTH_SHORT).show();
+                    Toast.makeText(context,"点击了头像:"+getContactPersonPojo().getName(),Toast.LENGTH_SHORT).show();
                     break;
             }
         }
