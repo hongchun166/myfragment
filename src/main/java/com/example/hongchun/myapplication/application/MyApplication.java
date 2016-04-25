@@ -31,7 +31,7 @@ public class MyApplication extends Application {
         application=this;
         x.Ext.init(this);
         x.Ext.setDebug(true);
-        SDKInitializer.initialize(this);
+
     }
 
 

@@ -80,6 +80,13 @@
     @org.xutils.view.annotation.Event <methods>;
 }
 
+#gson
+-dontwarn com.google.gson.**
+-keep class com.google.gson.**{*;}
+-keep class sun.misc.Unsafe {*;}
+-keep class com.wenshitech.shopmanage.activity.meeting.pojo.** {*;}
+-keep class com.ws.lottery.util.** {*;}
+
+
 -keep class com.belerweb.** {*;}
--keep class com.google.code.gson.** {*;}
 -keep class com.google.zxing.** {*;}

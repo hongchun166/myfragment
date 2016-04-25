@@ -27,7 +27,7 @@ import java.util.List;
 /**
  * Created by TianHongChun on 2016/4/5.
  */
-@ContentView(R.layout.fragment_friends_layout)
+@ContentView(R.layout.fragment_contactperson_layout)
 public class ContactPersonFragment extends BaseFragment {
 
     Context context;
@@ -72,26 +72,13 @@ public class ContactPersonFragment extends BaseFragment {
     }
 
     private void initData(){
-        LoadDiaog.getInstance().show(getFragmentManager());
        List<ContactPersonPojo> pojoList= ContactsPersonDao.getInstant().getContactsPersonList(context);
 
         mData.clear();
         mData.addAll(pojoList);
         CollectionsUtil.sortContactPerson(mData);
-
         mAdapter.notifyDataSetChanged();
-        new Handler().postDelayed(new Runnable() {
-            @Override
-            public void run() {
-                LoadDiaog.getInstance().dismiss();
-            }
-        }, 3000);
-
         MContactPersonDao.getInstant().saveDatas(pojoList);
-        List<ContactPersonPojo> personPojoList=MContactPersonDao.getInstant().selectAll();
-        mData.addAll(personPojoList);
-        CollectionsUtil.sortContactPerson(mData);
-        mAdapter.notifyDataSetChanged();
     }
 
 

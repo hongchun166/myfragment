@@ -1,48 +1,33 @@
 package com.example.hongchun.myapplication.ui.fragment.home;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
-import android.os.Handler;
-import android.os.Message;
-import android.provider.ContactsContract;
 import android.support.annotation.Nullable;
-import android.support.v4.app.Fragment;
-import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
-import android.widget.AbsListView;
-import android.widget.ListView;
 import android.widget.Toast;
 
 import com.example.hongchun.myapplication.R;
-import com.example.hongchun.myapplication.data.dao.ContactsPersonDao;
 import com.example.hongchun.myapplication.data.pojo.ContactPersonPojo;
 import com.example.hongchun.myapplication.interfacem.implementsm.ImpOnTouchAssortListener;
 import com.example.hongchun.myapplication.ui.adapter.ContactPersonRecyclerAdapter;
 import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
 import com.example.hongchun.myapplication.ui.view.AlphabetView;
 import com.example.hongchun.myapplication.util.CollectionsUtil;
-import com.google.gson.Gson;
 
-import org.xutils.common.util.LogUtil;
 import org.xutils.view.annotation.ContentView;
-import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
  * Created by TianHongChun on 2016/4/5.
  * 本地通讯录
  */
-@ContentView(R.layout.fragment_history_layout)
+@ContentView(R.layout.fragment_friends_layout)
 public class FriendsFragment extends BaseFragment   {
 
     Context context;

@@ -31,12 +31,32 @@ public class MContactPersonDao extends BaseDao {
         } catch (DbException e) {
             e.printStackTrace();
         }
-
     }
+
     public void saveData(ContactPersonPojo contactPersonPojo){
         DbManager dbManager=getDBManage();
         try {
             dbManager.saveBindingId(contactPersonPojo);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveOrReplaceDatas(List<ContactPersonPojo> personPojoList){
+
+        DbManager dbManager=getDBManage();
+        try {
+            dbManager.saveOrUpdate(personPojoList);
+        } catch (DbException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void saveOrReplaceData(ContactPersonPojo personPojo){
+
+        DbManager dbManager=getDBManage();
+        try {
+            dbManager.saveOrUpdate(personPojo);
         } catch (DbException e) {
             e.printStackTrace();
         }

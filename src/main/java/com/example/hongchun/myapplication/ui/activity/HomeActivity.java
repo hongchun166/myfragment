@@ -8,6 +8,7 @@ import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
+import android.view.View;
 import android.widget.FrameLayout;
 import android.widget.RadioButton;
 import android.widget.RadioGroup;
@@ -17,6 +18,7 @@ import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.activity.zxing.activity.CaptureActivity;
 import com.example.hongchun.myapplication.ui.activity.zxing.activity.EncodingActivity;
 import com.example.hongchun.myapplication.ui.fragment.home.CallFragment;
+import com.example.hongchun.myapplication.ui.fragment.home.ContactFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.ContactPersonFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.FriendsFragment;
 import com.example.hongchun.myapplication.ui.fragment.home.HomeFragment;
@@ -59,6 +61,16 @@ public class HomeActivity extends BaseExitActivity {
     @ViewInject(R.id.radiobutton_friends)
     RadioButton radioButton_friends;
 
+    //通讯录模式按钮
+    @ViewInject(R.id.radiogroup_contact)
+    RadioGroup radioGroupContact;
+
+    @ViewInject(R.id.radioButton_phone)
+    RadioButton radioButtonPhone;
+
+    @ViewInject(R.id.radioButton_native)
+    RadioButton radioButtonNative;
+
 
     Fragment tempFragment;
 
@@ -66,6 +78,8 @@ public class HomeActivity extends BaseExitActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         initToolBar(mToolBar);
+        setContactFragmentShowHideRadioButton(false);
+
         setDefaultFragment();
 
     }
@@ -92,79 +106,107 @@ public class HomeActivity extends BaseExitActivity {
     }
 
     private void setDefaultFragment(){
+
+
         Fragment fragment=new HomeFragment();
         FragmentManager fragmentManager=getSupportFragmentManager();
         FragmentTransaction transaction=fragmentManager.beginTransaction();
         transaction.add(R.id.framelayout, fragment, "HomeFragment");
         transaction.commit();
         tempFragment=fragment;
-        initToolBar(mToolBar,textViewTitlename,getResources().getString(R.string.string_home_tab_home));
+        initToolBar(mToolBar, textViewTitlename, getResources().getString(R.string.string_home_tab_home));
     }
 
-    @Event(value = {R.id.radiogroup},type = RadioGroup.OnCheckedChangeListener.class)
+    @Event(value = {R.id.radiogroup,R.id.radiogroup_contact},type = RadioGroup.OnCheckedChangeListener.class)
     private void onEvenOnCheckedChanged(RadioGroup group, int checkedId){
+
+        if(group.getId()==R.id.radiogroup_contact){
+            // 判断点击的是不是通讯录中的radiobutton
+            if(checkedId==R.id.radioButton_phone){
+                ((ContactFragment)tempFragment).setShowFragment(ContactFragment.FRAGMENT_PHONE);
+            }else if(checkedId==R.id.radioButton_native){
+                ((ContactFragment)tempFragment).setShowFragment(ContactFragment.FRAGMENT_NATIVE);
+            }
+            return;
+        }
         FragmentManager fragmentManager=getSupportFragmentManager();
             FragmentTransaction transaction=fragmentManager.beginTransaction();
                 if(tempFragment!=null){
                     transaction.hide(tempFragment);
                 }
-            Fragment fragment=null;
             int framelayoutId=R.id.framelayout;
 
                 switch (checkedId){
                     case R.id.radiobutton_ContactPerson:
-                        fragment=fragmentManager.findFragmentByTag("ContactPersonFragment");
-                        if(fragment!=null && fragment.isAdded()){
-                            transaction.show(fragment);
+                        tempFragment=fragmentManager.findFragmentByTag("ContactFragment");
+                        if(tempFragment!=null && tempFragment.isAdded()){
+                            transaction.show(tempFragment);
                         }else {
-                            fragment=new ContactPersonFragment();
-                            transaction.add(framelayoutId,fragment, "ContactPersonFragment");
+                            tempFragment=new ContactFragment();
+                            transaction.add(framelayoutId,tempFragment, "ContactFragment");
                         }
-                        setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_history));
+                        setToolBarTitle(textViewTitlename, getResources().getString(R.string.string_home_tab_contact));
+                        setContactFragmentShowHideRadioButton(true);
+
                         break;
                     case R.id.radiobutton_call:
-                        fragment=fragmentManager.findFragmentByTag("CallFragment");
-                        if(fragment!=null && fragment.isAdded()){
-                            transaction.show(fragment);
+                        tempFragment=fragmentManager.findFragmentByTag("CallFragment");
+                        if(tempFragment!=null && tempFragment.isAdded()){
+                            transaction.show(tempFragment);
                         }else {
-                            fragment=new CallFragment();
-                            transaction.add(framelayoutId,fragment, "CallFragment");
+                            tempFragment=new CallFragment();
+                            transaction.add(framelayoutId,tempFragment, "CallFragment");
                         }
                         setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_call));
+                        setContactFragmentShowHideRadioButton(false);
                         break;
                     case R.id.radiobutton_home:
-                        fragment=fragmentManager.findFragmentByTag("HomeFragment");
-                        if(fragment!=null && fragment.isAdded()){
-                            transaction.show(fragment);
+                        tempFragment=fragmentManager.findFragmentByTag("HomeFragment");
+                        if(tempFragment!=null && tempFragment.isAdded()){
+                            transaction.show(tempFragment);
                         }else {
-                            fragment=new HomeFragment();
-                            transaction.add(framelayoutId,fragment, "HomeFragment");
+                            tempFragment=new HomeFragment();
+                            transaction.add(framelayoutId,tempFragment, "HomeFragment");
                         }
                         setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_home));
+                        setContactFragmentShowHideRadioButton(false);
                         break;
                     case R.id.radiobutton_friends:
-                        fragment=fragmentManager.findFragmentByTag("FriendsFragment");
-                        if(fragment!=null && fragment.isAdded()){
-                            transaction.show(fragment);
+                        tempFragment=fragmentManager.findFragmentByTag("FriendsFragment");
+                        if(tempFragment!=null && tempFragment.isAdded()){
+                            transaction.show(tempFragment);
                         }else {
-                            fragment=new FriendsFragment();
-                            transaction.add(framelayoutId,fragment, "FriendsFragment");
+                            tempFragment=new FriendsFragment();
+                            transaction.add(framelayoutId,tempFragment, "FriendsFragment");
                         }
                         setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_friends));
+                        setContactFragmentShowHideRadioButton(false);
                         break;
                     case R.id.radiobutton_message:
-                        fragment=fragmentManager.findFragmentByTag("MessageFragment");
-                        if(fragment!=null && fragment.isAdded()){
-                            transaction.show(fragment);
+                        tempFragment=fragmentManager.findFragmentByTag("MessageFragment");
+                        if(tempFragment!=null && tempFragment.isAdded()){
+                            transaction.show(tempFragment);
                         }else {
-                            fragment=new MessageFragment();
-                            transaction.add(framelayoutId,fragment, "MessageFragment");
+                            tempFragment=new MessageFragment();
+                            transaction.add(framelayoutId,tempFragment, "MessageFragment");
                         }
                         setToolBarTitle(textViewTitlename,getResources().getString(R.string.string_home_tab_message));
+                        setContactFragmentShowHideRadioButton(false);
                         break;
                 }
             transaction.commit();
-            tempFragment=fragment;
     }
+
+    private void setContactFragmentShowHideRadioButton(boolean isShow){
+            if(isShow){
+                radioGroupContact.setVisibility(View.VISIBLE);
+                textViewTitlename.setVisibility(View.GONE);
+            }else {
+                radioGroupContact.setVisibility(View.GONE);
+                textViewTitlename.setVisibility(View.VISIBLE);
+            }
+    }
+
+
 
 }

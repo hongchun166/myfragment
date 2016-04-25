@@ -8,6 +8,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.View;
 import android.widget.TextView;
 
+import com.baidu.mapapi.SDKInitializer;
 import com.example.hongchun.myapplication.application.MyApplication;
 
 import org.xutils.x;
@@ -20,6 +21,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         x.view().inject(this);
         MyApplication.getApplication().addActivity(this);
+        SDKInitializer.initialize(getApplicationContext());
     }
     public void initToolBar(Toolbar mToolBar){
         setSupportActionBar(mToolBar);

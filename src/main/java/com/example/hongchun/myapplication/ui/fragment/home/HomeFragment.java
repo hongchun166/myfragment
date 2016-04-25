@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
+import android.widget.TextView;
 
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.activity.map.MapActivity;
@@ -31,6 +32,8 @@ public class HomeFragment extends BaseFragment {
 
     @ViewInject(R.id.viewpage_carouselViewpage)
     CarouselViewpage carouselViewpage;
+    @ViewInject(R.id.textview_marquee_forever)
+    TextView marqueeForever;
 
     @Override
     public void onAttach(Context context) {
@@ -47,6 +50,7 @@ public class HomeFragment extends BaseFragment {
         stringList.add("assets://experience/launch_3.png");
         stringList.add("assets://experience/launch_4.png");
         carouselViewpage.setDatas(context, stringList,true);
+        marqueeForever.setSelected(true);
     }
 
     @Override

@@ -26,14 +26,45 @@ android:orientation="vertical"
         android:layout_width="match_parent"
         android:layout_height="1px" />
 </LinearLayout>
-<TextView
-    android:id="@+id/textview_titlename"
-    android:layout_width="wrap_content"
-    android:layout_height="wrap_content"
-    android:layout_centerInParent="true"
-    android:textSize="@dimen/dimen_textsize_large_xl"
-    android:textColor="@color/colorTitleTextColor"
-    android:textStyle="bold"
-    />
+    <FrameLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerInParent="true"
+        >
+        <TextView
+            android:id="@+id/textview_titlename"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:textSize="@dimen/dimen_textsize_large_xl"
+            android:textColor="@color/colorTitleTextColor"
+            android:textStyle="bold"
+            />
+        <RadioGroup
+            android:id="@+id/radiogroup_contact"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal"
+            android:visibility="gone"
+            >
+            <RadioButton
+                android:id="@+id/radioButton_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:background="@drawable/selector_button_semicircle_left"
+                android:checked="true"
+                android:text="手机联系人"
+                />
+            <RadioButton
+                android:id="@+id/radioButton_native"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:button="@null"
+                android:background="@drawable/selector_button_semicircle_right"
+                android:text="本地联系人"
+                />
+        </RadioGroup>
+    </FrameLayout>
 
 </RelativeLayout>

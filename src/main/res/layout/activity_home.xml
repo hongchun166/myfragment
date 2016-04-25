@@ -46,7 +46,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:button="@null"
-            android:text="@string/string_home_tab_history"
+            android:text="@string/string_home_tab_contact"
             android:drawableTop="@drawable/selector_tab_history"
             android:drawablePadding="@dimen/dimen_home_tab_drawblePaddin"
             android:gravity="center"

@@ -21,7 +21,7 @@
     <string name="string_home_tab_message">消息</string>
     <string name="string_home_tab_friends">我的好友</string>
     <string name="string_home_tab_call">电话</string>
-    <string name="string_home_tab_history">通讯录</string>
+    <string name="string_home_tab_contact">通讯录</string>
 
     <!-- home fragment界面资源文字-->
     <string name="string_home_tab_viedeo">视频</string>

@@ -21,7 +21,7 @@ public class ContactPersonPojo {
     @Column(name = "email")
     private String email;
 
-    @Column(name = "phone")
+    @Column(name = "phone",property = "UNIQUE")
     private String phone;
 
     @Column(name = "nickname")
