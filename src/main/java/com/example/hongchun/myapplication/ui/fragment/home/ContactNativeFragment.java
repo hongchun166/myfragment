@@ -72,6 +72,7 @@ public class ContactNativeFragment extends BaseFragment {
         List<ContactPersonPojo> personPojoList= MContactPersonDao.getInstant().selectAll();
         mData.clear();
         mData.addAll(personPojoList);
+        mData.addAll(personPojoList);
         CollectionsUtil.sortContactPerson(mData);
         mAdapter.notifyDataSetChanged();
     }

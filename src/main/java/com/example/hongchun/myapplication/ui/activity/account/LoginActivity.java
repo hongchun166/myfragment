@@ -15,11 +15,14 @@ import android.widget.CheckBox;
 import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
+import android.widget.Toast;
 
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.ui.activity.BaseExitActivity;
 import com.example.hongchun.myapplication.ui.activity.HomeActivity;
 import com.example.hongchun.myapplication.ui.activity.MainActivity;
+import com.hyphenate.EMCallBack;
+import com.hyphenate.chat.EMClient;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
@@ -48,6 +51,8 @@ public class LoginActivity extends BaseExitActivity {
 
     @ViewInject(R.id.button_login)
     Button button_login;
+    @ViewInject(R.id.button_register)
+    Button buttonRegister;
 
 
     @Override
@@ -69,15 +74,52 @@ public class LoginActivity extends BaseExitActivity {
                 }
             }
     }
-    @Event(value = {R.id.button_login,R.id.imagebutton_username_clear},type = View.OnClickListener.class)
+    @Event(value = {R.id.button_login,R.id.imagebutton_username_clear,R.id.button_register},type = View.OnClickListener.class)
     private void onEvenOnclick(View view){
-            if(view.getId()==R.id.button_login){
-                Intent intent=new Intent(this, HomeActivity.class);
+        Intent intent=null;
+        switch (view.getId()){
+            case R.id.button_login:
+                if(check()){
+                    final  String userName=et_username.getText().toString();
+                    final String password=et_password.getText().toString();
+
+                    EMClient.getInstance().login(userName, password, new EMCallBack() {
+                        @Override
+                        public void onSuccess() {
+                            runOnUiThread(new Runnable() {
+                                @Override
+                                public void run() {
+                                    EMClient.getInstance().groupManager().loadAllGroups();
+                                    EMClient.getInstance().chatManager().loadAllConversations();
+
+                                    Intent loginIntent = new Intent(LoginActivity.this, HomeActivity.class);
+                                    startActivity(loginIntent);
+                                    finish();
+                                }
+                            });
+                        }
+
+                        @Override
+                        public void onError(int i, String s) {
+                                Toast.makeText(LoginActivity.this,"登录失败"+s,Toast.LENGTH_SHORT).show();
+                        }
+
+                        @Override
+                        public void onProgress(int i, String s) {
+
+                        }
+                    });
+                }
+
+                break;
+            case R.id.button_register:
+                intent=new Intent(this,RegisterActivity.class);
                 startActivity(intent);
-                finish();
-            }else if(view.getId()==R.id.imagebutton_username_clear){
-                    et_username.setText("");
-            }
+                break;
+            case R.id.imagebutton_username_clear:
+                et_username.setText("");
+                break;
+        }
     }
 
     // 显示隐藏密码
@@ -94,5 +136,22 @@ public class LoginActivity extends BaseExitActivity {
             Spannable spanText = (Spannable) charSequence;
             Selection.setSelection(spanText, charSequence.length());
         }
+    }
+
+
+    private boolean check(){
+        String userName=et_username.getText().toString();
+        String password=et_password.getText().toString();
+        if(TextUtils.isEmpty(userName)){
+            Toast.makeText(this,"请输入用户",Toast.LENGTH_SHORT).show();
+            et_username.requestFocus();
+             return false;
+        }
+        if(TextUtils.isEmpty(password)){
+            Toast.makeText(this,"请输入密码",Toast.LENGTH_SHORT).show();
+            et_password.requestFocus();
+            return false;
+        }
+        return true;
     }
 }

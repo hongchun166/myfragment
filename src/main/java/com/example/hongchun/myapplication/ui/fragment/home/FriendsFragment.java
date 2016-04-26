@@ -1,5 +1,6 @@
 package com.example.hongchun.myapplication.ui.fragment.home;
 
+import android.app.Activity;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -12,13 +13,16 @@ import android.widget.Toast;
 import com.example.hongchun.myapplication.R;
 import com.example.hongchun.myapplication.data.pojo.ContactPersonPojo;
 import com.example.hongchun.myapplication.interfacem.implementsm.ImpOnTouchAssortListener;
-import com.example.hongchun.myapplication.ui.adapter.ContactPersonRecyclerAdapter;
+import com.example.hongchun.myapplication.ui.adapter.FriendsRecyclerAdapter;
 import com.example.hongchun.myapplication.ui.fragment.BaseFragment;
 import com.example.hongchun.myapplication.ui.view.AlphabetView;
 import com.example.hongchun.myapplication.util.CollectionsUtil;
+import com.hyphenate.chat.EMClient;
+import com.hyphenate.exceptions.HyphenateException;
 
 import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.ViewInject;
+import org.xutils.x;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -31,6 +35,7 @@ import java.util.List;
 public class FriendsFragment extends BaseFragment   {
 
     Context context;
+    Activity activity;
 
     @ViewInject(R.id.alphabetView)
     AlphabetView alphabetView;
@@ -39,8 +44,14 @@ public class FriendsFragment extends BaseFragment   {
     RecyclerView recyclerView;
 
 
-    ContactPersonRecyclerAdapter mAdapter;
-    List<ContactPersonPojo> contactPersonPojoList;
+    FriendsRecyclerAdapter mAdapter;
+    List<ContactPersonPojo> mData;
+
+    @Override
+    public void onAttach(Activity activity) {
+        super.onAttach(activity);
+        this.activity=activity;
+    }
 
     @Override
     public void onAttach(Context context) {
@@ -52,6 +63,33 @@ public class FriendsFragment extends BaseFragment   {
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
 
+        x.task().run(new Runnable() {
+            @Override
+            public void run() {
+                try {
+                    List<String> usernames = EMClient.getInstance().contactManager().getAllContactsFromServer();
+                   final List<ContactPersonPojo> pojoList=new ArrayList<ContactPersonPojo>();
+                    for (String username:usernames){
+                        ContactPersonPojo personPojo=new ContactPersonPojo();
+                        personPojo.setName(username);
+                        pojoList.add(personPojo);
+                    }
+                    CollectionsUtil.sortContactPerson(pojoList);
+                    activity.runOnUiThread(new Runnable() {
+                        @Override
+                        public void run() {
+                            mData.clear();
+                            mData.addAll(pojoList);
+                            mAdapter.notifyDataSetChanged();
+                        }
+                    });
+                } catch (HyphenateException e) {
+                    e.printStackTrace();
+                }
+            }
+        });
+
+
     }
 
     @Override
@@ -60,10 +98,11 @@ public class FriendsFragment extends BaseFragment   {
         recyclerView.setLayoutManager(linearLayoutManager);
         recyclerView.setItemAnimator(new DefaultItemAnimator());
 
-        contactPersonPojoList=new ArrayList<>();
-        contactPersonPojoList.addAll(getTestData());
-        mAdapter=new ContactPersonRecyclerAdapter(context,contactPersonPojoList);
+        mData=new ArrayList<>();
+        mData.addAll(getTestData());
+        mAdapter=new FriendsRecyclerAdapter(context,mData);
         recyclerView.setAdapter(mAdapter);
+
 
     }
     @Override

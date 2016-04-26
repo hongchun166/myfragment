@@ -45,7 +45,6 @@
                 android:paddingLeft="@dimen/dimen_login_edittext_paddin"
                 android:textSize="@dimen/dimen_textsize_normal"
                 android:background="@null"
-                android:inputType="phone"
                 android:singleLine="true"
                 />
             <ImageButton

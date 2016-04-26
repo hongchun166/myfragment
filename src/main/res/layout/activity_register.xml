@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    >
+    <include layout="@layout/toolbar_layout"/>
+    <EditText
+        android:id="@+id/edittext_username"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/dimen_boundary_width"
+        android:background="@drawable/selector_login_edittext"
+        android:textSize="@dimen/dimen_textsize_normal"
+        android:textColor="@color/colorContentTextColor"
+        android:hint="用户名"
+        android:textColorHint="@color/colorHintTextColor"
+        android:padding="10dp"
+        />
+    <EditText
+        android:id="@+id/edittext_password"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/dimen_boundary_width"
+        android:background="@drawable/selector_login_edittext"
+        android:textSize="@dimen/dimen_textsize_normal"
+        android:textColor="@color/colorContentTextColor"
+        android:hint="用户密码"
+        android:textColorHint="@color/colorHintTextColor"
+        android:padding="10dp"
+        />
+    <EditText
+        android:id="@+id/edittext_password2"
+        android:layout_width="match_parent"
+        android:layout_height="40dp"
+        android:layout_margin="@dimen/dimen_boundary_width"
+        android:background="@drawable/selector_login_edittext"
+        android:textSize="@dimen/dimen_textsize_normal"
+        android:textColor="@color/colorContentTextColor"
+        android:hint="确认密码"
+        android:textColorHint="@color/colorHintTextColor"
+        android:padding="10dp"
+        />
+
+    <Button
+        android:id="@+id/button_register"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/dimen_boundary_width"
+        android:background="@drawable/selector_button_normal"
+        android:text="登     录"
+        android:textSize="@dimen/dimen_textsize_large"
+        android:textColor="@color/colorContentTextColor"
+        />
+</LinearLayout>

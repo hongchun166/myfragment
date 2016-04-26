@@ -39,7 +39,46 @@ public class ContactFragment extends BaseFragment{
         super.onAttach(context);
         this.context=context;
     }
-//    @Override
+
+    @Override
+    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
+        super.onViewCreated(view, savedInstanceState);
+    }
+
+    @Override
+    public void initView(View view, @Nullable Bundle savedInstanceState) {
+        FragmentManager fragmentManager=getChildFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+        fragmentTransaction.replace(R.id.framelayout_contact, new ContactPersonFragment(), "ContactPersonFragment");
+        fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+        fragmentTransaction.addToBackStack(null);
+        fragmentTransaction.commit();
+    }
+
+    @Override
+    public void initEven(View view, @Nullable Bundle savedInstanceState) {
+
+    }
+
+    public void setShowFragment(int index){
+        FragmentManager fragmentManager=getChildFragmentManager();
+        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
+
+        if(index==FRAGMENT_PHONE){
+            fragmentTransaction.replace(R.id.framelayout_contact, new ContactPersonFragment(), "ContactPersonFragment");
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }else if(index==FRAGMENT_NATIVE){
+            fragmentTransaction.replace(R.id.framelayout_contact, new ContactNativeFragment(), "ContactNativeFragment");
+            fragmentTransaction.setTransition(FragmentTransaction.TRANSIT_FRAGMENT_CLOSE);
+            fragmentTransaction.addToBackStack(null);
+            fragmentTransaction.commit();
+        }
+    }
+
+
+    //    @Override
 //    public void onDetach() {
 //        super.onDetach();
 //        try {
@@ -54,30 +93,5 @@ public class ContactFragment extends BaseFragment{
 //            throw new RuntimeException(e);
 //        }
 //    }
-    @Override
-    public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        super.onViewCreated(view, savedInstanceState);
-    }
-
-    @Override
-    public void initView(View view, @Nullable Bundle savedInstanceState) {
-        getFragmentManager().beginTransaction().replace(R.id.framelayout_contact, new ContactPersonFragment(),"ContactPersonFragment").commit();
-    }
-
-    @Override
-    public void initEven(View view, @Nullable Bundle savedInstanceState) {
-
-    }
-
-    public void setShowFragment(int index){
-        FragmentManager fragmentManager=getChildFragmentManager();
-        FragmentTransaction fragmentTransaction=fragmentManager.beginTransaction();
-
-        if(index==FRAGMENT_PHONE){
-            fragmentTransaction.replace(R.id.framelayout_contact, new ContactPersonFragment(), "ContactPersonFragment").commit();
-        }else if(index==FRAGMENT_NATIVE){
-            fragmentTransaction.replace(R.id.framelayout_contact, new ContactNativeFragment(),"ContactNativeFragment").commit();
-        }
-    }
 
 }

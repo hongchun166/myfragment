@@ -4,6 +4,7 @@ import android.app.Activity;
 import android.app.Application;
 
 import com.baidu.mapapi.SDKInitializer;
+import com.example.hongchun.myapplication.util.ChatHelper;
 
 import org.xutils.DbManager;
 import org.xutils.x;
@@ -31,7 +32,7 @@ public class MyApplication extends Application {
         application=this;
         x.Ext.init(this);
         x.Ext.setDebug(true);
-
+        ChatHelper.getInstance().init(getApplicationContext());
     }
 
 

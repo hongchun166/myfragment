@@ -86,8 +86,6 @@ public class ContactPersonFragment extends BaseFragment {
 
 
 
-
-
     private List<ContactPersonPojo> getTestData(){
         List<ContactPersonPojo> list=new ArrayList<>();
         ContactPersonPojo personPojo1=new ContactPersonPojo(1,"张三","123412311","");
