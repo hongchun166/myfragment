@@ -18,4 +18,11 @@ public class MConstants {
         public static final String ROUTE_PLAN_NODE = "routePlanNode";
         public static final String APP_FOLDER_NAME = "BNSDKDemo";
     }
+    public class DownloadFinal{
+        public static final int DOWNLOAD_TYPE_WAITING=1;
+        public static final int DOWNLOAD_TYPE_STARTED=2;
+        public static final int DOWNLOAD_TYPE_FINISHED=3;
+        public static final int DOWNLOAD_TYPE_STOPPED=4;
+        public static final int DOWNLOAD_TYPE_ERROR=5;
+    }
 }
