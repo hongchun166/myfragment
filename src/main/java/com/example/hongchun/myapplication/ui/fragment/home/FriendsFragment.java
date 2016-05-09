@@ -88,8 +88,6 @@ public class FriendsFragment extends BaseFragment   {
                 }
             }
         });
-
-
     }
 
     @Override
